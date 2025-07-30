@@ -1,0 +1,4 @@
+@import "tailwindcss";
+.ha{
+    @apply darkmode:hover:bg-neutral-900 hover:bg-gray-100 active:bg-gray-200 darkmode:active:bg-neutral-950
+}

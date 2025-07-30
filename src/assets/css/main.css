@@ -1,0 +1,213 @@
+/* @config '../../../tailwind.config.js'; */
+@import "tailwindcss";
+@import '../../../node_modules/quill/dist/quill.snow.css';
+@import '../../../node_modules/quill/dist/quill.core.css';
+/* @import './quill.css'; */
+
+@import './base.css';
+@import './colors.css';
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@media (prefers-color-scheme: dark) {}
+
+@custom-variant darkmode (&:where(.darkmode, .darkmode *));
+
+.link_sidebar {
+    @apply rounded sm:w-[unset] w-full px-3 py-2 hover:hover:bg-neutral-300 darkmode:hover:bg-neutral-700 darkmode:hover:text-black
+}
+
+@theme {
+    --color-blue: #01589A;
+    --color-blue1: #175CD3;
+    --color-blue-light: #E9F3FB;
+    --color-blue-deep: #026AA2;
+    --color-BlueLightest: #E6EFF5;
+
+    --color-orange: #FFF4ED;
+    --color-orange-deep: #B93815;
+
+    --color-red: #FFF1F3;
+    --color-red1: #C01048;
+
+    --color-gray-1: #7F7E83;
+
+    --color-green-light: #ECFDF3;
+    --color-green-deep: #027A48;
+
+    --color-purple-light: #F3F0FB;
+    --color-purple-deep: #6941C6;
+
+    --color-indigo-dep: #363F72;
+    --color-indigo-light: #F8F9FC;
+
+    --color-pink-deep: #C11574;
+    --color-pink-light: #F7EDF6;
+
+
+    --color-yello: #D89614;
+    --color-white1: #f1f1f1;
+
+    --color-white2: #E5E5EF;
+    --color-white3: #7F7E83;
+
+
+    --container-min495: min(495px, 100%);
+    --container-max300: min(300, 100%);
+    --container-max200: min(200, 100%);
+    --container-max100: min(100, 100%);
+    --container-max1200: min(1200px, 100%);
+    --container-max1000: min(1000px, 100%);
+    --container-max150: min(150, 100%);
+    --container-sidebar300: min(300px, calc(100% - 2rem));
+
+
+}
+
+.plr {
+    @apply px-6
+}
+
+* {
+    @apply scheme-normal!
+}
+
+
+.theme1cont,
+.theme2cont,
+.theme3cont,
+
+.ql-picker-options {
+    @apply bg-white text-black
+    /* @theme --color-yello: black; */
+}
+
+.darkmode .theme3cont,.darkmode .theme2cont, .darkmode .quill, .darkmode .ql-picker-options {
+    @apply text-white1 bg-black
+}
+
+.darkmode .theme1cont, .darkmode .ql-picker-options {
+    @apply darkmode:border-neutral-900 darkmode:border text-white1 bg-black
+}
+
+.ql-editor {
+    @apply border-t-gray-600! border-t! p-0 min-h-15 pt-3
+}
+
+.ql-container.ql-snow,
+.ql-toolbar.ql-snow {
+    @apply border-none
+}
+
+
+.darkmode .ql-toolbar.ql-snow {
+    @apply bg-black
+}
+
+.darkmode .ql-editor.ql-blank::before {
+    /* color: red !important; */
+    @apply text-white3
+}
+
+.title1 {
+    @apply text-[20px] font-[600]
+}
+
+/* form.validate :invalid{
+    @apply 
+} */
+
+
+/* form .validate :invalid{
+    @apply border-red-600 ring-red-500
+} */
+
+
+.list-move,
+/* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+    @apply transition-all ease-in duration-200
+    /* transition: all 0.5s ease; */
+}
+
+.list-enter-from,
+.list-leave-to {
+    @apply opacity-0 translate-x-8
+    /* opacity: 0; */
+    /* transform: translateX(30px); */
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+    @apply absolute
+    /* position: absolute; */
+}
+
+.list1-move,
+/* apply transition to moving elements */
+.list1-enter-active,
+.list1-leave-active {
+    @apply transition-all ease-in duration-200
+    /* transition: all 0.5s ease; */
+}
+
+.list1-enter-from,
+.list1-leave-to {
+    @apply opacity-0 translate-x-8
+    /* opacity: 0; */
+    /* transform: translateX(30px); */
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list1-leave-active {
+    @apply absolute
+}
+
+.list-move,
+/* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+    /* transition: all 0.5s ease; */
+    @apply transition-all ease-in duration-200
+}
+
+.list-enter-from,
+.list-leave-to {
+    @apply opacity-0 translate-x-8
+    /* opacity: 0;
+  transform: translateX(30px); */
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+    @apply absolute
+    /* position: absolute; */
+}
+
+.list1-move,
+/* apply transition to moving elements */
+.list1-enter-active,
+.list1-leave-active {
+    /* transition: all 0.5s ease; */
+    @apply transition-all ease-in duration-200
+}
+
+.list1-enter-from,
+.list1-leave-to {
+    @apply opacity-0 translate-x-8
+    /* opacity: 0;
+  transform: translateX(30px); */
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list1-leave-active {
+    /* position: absolute; */
+    @apply absolute
+}

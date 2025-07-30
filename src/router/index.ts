@@ -5,18 +5,46 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView,
+      path: '/base',
+      name: 'base',
+      component: () => import('../views/index.vue'),
+      children: [
+        {
+          path: '/',
+          name: 'home',
+          component: HomeView,
+        },
+        {
+          path: '/remountonrutechanges',
+          name: 'remountonrutechanges',
+          component: () => import('../views/refreshBase.vue'),
+          children: [
+            {
+              path: '/top-tracks',
+              name: 'top-tracks',
+              component: () => import('../views/tracks/tracks.vue'),
+            },
+            {
+              path: '/track/:id',
+              name: 'track',
+              component: () => import('../views/tracks/track.vue'),
+              props: (route: { params: { id: string } }) => ({
+                id: route.params.id
+              })
+            }
+          ]
+        },
+        {
+          path: '/checkout/:id',
+          name: 'checkout',
+          component: () => import('../views/checkout/checkout.vue'),
+          props: (route: { params: { id: string } }) => ({
+            id: route.params.id
+          })
+        },
+      ]
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-    },
+
   ],
 })
 
