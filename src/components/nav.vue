@@ -33,7 +33,7 @@ const handelToggle = () => {
             <div :class="{ 'flex': isOpen, 'hidden sm:flex': !isOpen }"
                 class=" grow gap-x-6 sm:pl-6 items-start flex-col sm:flex-row sm:items-center sm:gap-y-6  z-50 sm:relative top-20 sm:top-[unset] w-full sm:w-[unset]">
                 <router-link class=" font-[400] link_sidebar " to="/">Home</router-link>
-                <router-link class=" font-[400] link_sidebar " :to="{name:'top-tracks'}">Courses</router-link>
+                <router-link class=" font-[400] link_sidebar " :to="{ name: 'top-tracks' }">Courses</router-link>
                 <themeSelect class=" sm:ml-auto link_sidebar mt-auto sm:mt-[unset] mb-5 sm:mb-0" v-model="darkModelOpen"
                     @click="darkModelOpen = !darkModelOpen">
                     <template #menubutton>
@@ -42,24 +42,29 @@ const handelToggle = () => {
                         <FontAwesomeIcon v-else="theme.value == 'dark'" size="xl" :icon="['fas', 'desktop-alt']" />
                     </template>
                 </themeSelect>
-                <blueButton class="sm:w-[unset] w-full ">
-                    <template #label>
+                <router-link class="flex flex-col justify-start items-start" :to="{ name: 'login' }">
+                    <blueButton class="sm:w-[unset] w-full ">
+                        <template #label>
+                            <div class=" flex gap-4 items-center">
+                                <span>Login</span>
+                                <FontAwesomeIcon size="lg" :icon="['fas', 'right-to-bracket']" />
+                            </div>
+                        </template>
+                    </blueButton>
+                </router-link>
+                <router-link class="flex flex-col justify-start items-start" :to="{ name: 'signup' }">
+
+                    <buttonWhite class="sm:w-[unset] w-full mt-5 mb-5 sm:mb-0 sm:mt-[unset]">
                         <div class=" flex gap-4 items-center">
-                            <span>Login</span>
+                            <span>Sign Up</span>
                             <FontAwesomeIcon size="lg" :icon="['fas', 'right-to-bracket']" />
                         </div>
-                    </template>
-                </blueButton>
-                <buttonWhite class="sm:w-[unset] w-full mt-5 mb-5 sm:mb-0 sm:mt-[unset]">
-                    <div class=" flex gap-4 items-center">
-                        <span>Sign Up</span>
-                        <FontAwesomeIcon size="lg" :icon="['fas', 'right-to-bracket']" />
-                    </div>
-                </buttonWhite>
+                    </buttonWhite>
+                </router-link>
             </div>
         </div>
 
-        
+
     </header>
 </template>
 <style></style>

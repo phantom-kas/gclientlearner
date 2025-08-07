@@ -6,10 +6,10 @@ const props = defineProps({
         type: String,
         default: 'Select Label'
     },
-    placeholder: {
-        type: String,
-        default: ''
-    },
+    // placeholder: {
+    //     type: String,
+    //     default: ''
+    // },
     val: {
         type: [String, Number] as PropType<string | number>,
         default: null
@@ -25,14 +25,14 @@ const props = defineProps({
         type: String,
         required: true
     },
-    options: {
-        type: Array as PropType<{ value: string | number; label: string }[]>,
-        required: true
-    },
-    icon: {
-        type: Object as PropType<[string, string]>,
-        default: ['fas', 'trash-can']
-    },
+    // options: {
+    //     type: Array as PropType<{ value: string | number; label: string }[]>,
+    //     required: true
+    // },
+    // icon: {
+    //     type: Object as PropType<[string, string]>,
+    //     default: ['fas', 'trash-can']
+    // },
      max: {
         type: Number,
         default: 100

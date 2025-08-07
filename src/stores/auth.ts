@@ -1,99 +1,91 @@
-import { ref } from "vue";
-import { defineStore } from "pinia";
-import { useLocalStorage } from "@vueuse/core";
-import axios from "axios";
+import axios from 'axios';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import { useLocalStorage } from '@vueuse/core';
+import { useToastStore } from './toast';
+import { useRoute, useRouter } from 'vue-router';
+import { useUserStore } from './user';
+export const useauthStore = defineStore('auth', () => {
+  const data = useLocalStorage('authenticationdata', ref({} as { [key: string]: string }))
+  const loading = ref(false)
+  const toast = useToastStore()
+  const route = useRoute()
+  const router = useRouter()
+  const user = useUserStore()
+  const sigin = () => {
+    loading.value = true
+    axios.post('/login', {
+      email: data.value.email,
+      password: data.value.password
+    }, { _showAllMessages: true })
+      .finally(() => loading.value = false)
+      .then((res) => {
+        if (res.data.status != 'success') return
+        router.push({ name: 'dashboard' })
+        user.setUserInfo({ ...res.data.data, refreshToken: undefined, accessToken: undefined });
+        user.SetTokens(res.data.data.refreshToken, res.data.data.accessToken);
+        data.value = {}
+      })
+  }
 
-export const useAuthStore = defineStore("useAuthStore", () => {
-  const getRToken = ref(useLocalStorage("rtoken", ""));
-  const img_root_dir = ref(useLocalStorage('img_root_dir', ""))
-  const profile_img_url = ref(useLocalStorage("profile_img_url", ""));
-  const img_version = ref(useLocalStorage("img_version", 0));
-  const userInfo = ref<any>(useLocalStorage("authUserinfo", {} as { [key: string]: string | number }));
+  const signUp = () => {
+    loading.value = true
+    return axios.post('/learner', {
+      email: data.value.email,
+      lastName: data.value.lastName,
+      firstName: data.value.firstName,
+      password: data.value.password,
+      phone: data.value.phone ?? "",
+      gender: data.value.gender ?? "",
+      location: data.value.location ?? "",
+      description: data.value.description ?? "",
+    }, { _showAllMessages: true })
+      .finally(() => loading.value = false)
+      .then((res) => {
+        if (res.data.status != 'success') return
+        data.value = {}
 
-  const user_information = useLocalStorage("user_information", ref<any>({}));
-  const getAToken = ref(useLocalStorage("atoken", ""));
-  const removeAtkn = () => {
-    getAToken.value = "";
-  };
+        return res
+      })
+  }
 
-  function getMimeTypeFromBase64(base64: string | null) {
-    if (base64 == null) return null;
-    const result = /^data:(.*?);base64,/.exec(base64);
-    return result ? result[1] : null;
+  const resetPassword = () => {
+    if (data.value.password != data.value.confPassword) {
+      toast.addToast("Passwords don't match ", 'error')
+      return
+    }
+    loading.value = true
+    axios.put('reset_password', { token: route.query.token, newPassword: data.value.password }, { _showAllMessages: true }).finally(() => {
+      loading.value = false
+    })
+      .then(res => {
+        if (res.data.status != 'success') return
+        router.push({ name: 'login' })
+      })
   }
 
 
-  const base64ToBlob = (base64: string, mime: string | null) => {
-    // Remove the data URL prefix (if present)
-    const byteString = atob(base64.split(",")[1]);
-    const arrayBuffer = new Uint8Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++) {
-      arrayBuffer[i] = byteString.charCodeAt(i);
-    }
-    if (mime) return new Blob([arrayBuffer], { type: mime });
-  };
-
-  const SetTokens = (Rtoken: string, AToken: string | null) => {
-    getRToken.value = Rtoken;
-    getAToken.value = AToken;
-  };
-
-  const setProfileImg = (url: string) => {
-    profile_img_url.value = url;
-  };
-
-  const setUserInfo = (dt: any) => {
-    if (dt.profile_img_url) {
-      setProfileImg(dt.profile_img_url);
-    }
-    userInfo.value = {};
-    if (userInfo.value) {
-      Object.keys(dt).map((v) => (userInfo.value[v] = dt[v]));
-    }
-  };
-
-  const updateImgVersion = () => {
-    img_version.value = img_version.value + 1;
-    profile_img_url.value = profile_img_url.value + "?v=" + img_version.value;
-  };
-
-  const isAdmin = () => {
-    if (userInfo.value.account_type == 4) return true;
-    return false;
-  };
-
-  const getRole = () => {
-
-    return userInfo.value.account_type;
-  };
+  const getOtpCode = () => {
+    loading.value = !loading.value
+    axios.post('verify_email', { email: data.value.email, validate: undefined }, { _load: true, _showAllMessages: true })
+      .finally(() => loading.value = false).then(res => {
+        if (res.data.status != 'success') return false
+        router.push({ name: 'dashboard' })
+      })
+  }
 
 
-  const login = (email: string, password: string) => {
-    return axios.post('/login', { email, password }, { _load: true, _showAllMessages: true }).then(res => {
-      if (res.data.status != 'success') return res
-      console.log(res.data.data);
-      setUserInfo({ ...res.data.data, refreshToken: undefined, accessToken: undefined });
-      SetTokens(res.data.data.refreshToken, res.data.data.accessToken);
-      return res
-    })
+  const resendCode = () => {
+    axios.get('send_verify_email', { _load: true, _showAllMessages: true })
   }
 
   return {
-    getRole,
-    login,
-    isAdmin,
-    img_version,
-    updateImgVersion,
-    userInfo,
-    profile_img_url,
-    setUserInfo,
-    removeAtkn,
-    getRToken,
-    SetTokens,
-    getAToken,
-    img_root_dir,
-    user_information,
-    base64ToBlob,
-    getMimeTypeFromBase64,
-  };
+    signUp,
+    data,
+    loading,
+    resetPassword,
+    sigin,
+    getOtpCode,
+    resendCode
+  }
 });

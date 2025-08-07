@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import authtication from './authtication'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +15,7 @@ const router = createRouter({
           name: 'home',
           component: HomeView,
         },
+        ...authtication,
         {
           path: '/remountonrutechanges',
           name: 'remountonrutechanges',
@@ -31,16 +33,33 @@ const router = createRouter({
               props: (route: { params: { id: string } }) => ({
                 id: route.params.id
               })
+            },
+            {
+              path: '/checkout/:id',
+              name: 'checkout',
+              component: () => import('../views/checkout/checkout.vue'),
+              props: (route: { params: { id: string } }) => ({
+                id: route.params.id
+              })
             }
           ]
         },
         {
-          path: '/checkout/:id',
-          name: 'checkout',
-          component: () => import('../views/checkout/checkout.vue'),
-          props: (route: { params: { id: string } }) => ({
-            id: route.params.id
-          })
+          path: '/authbase',
+          name: 'authbase',
+          component: () => import('../views/auth/index.vue'),
+          children: [
+            {
+              path: '/dashboard',
+              name: 'dashboard',
+              component: () => import('../views/auth/dashBoard.vue'),
+            },
+            {
+              path: '/settings',
+              name: 'settings',
+              component: () => import('../views/auth/settings.vue'),
+            }
+          ]
         },
       ]
     },

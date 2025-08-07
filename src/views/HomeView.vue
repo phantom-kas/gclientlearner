@@ -75,27 +75,27 @@ onMounted(() => {
   </section>
 
   <section class="plr flex flex-col items-center justify-start w-full py-25">
-    <div class=" flex flex-col gap-y-4 mt-6 w-max1000 ">
-      <h3 class=" text-center text-3xl font-[700]">
-        We are proud
+    <div class=" flex flex-col gap-y-4 mt-6 w-max1000 items-center">
+      <h3 class=" text-center text-3xl font-[700] w-full">
+      We are proud
       </h3>
-      <span class=" text-center my-5">We take pride in our achievements and commitment to excellence. Join us in
+      <span class=" text-center my-5 w-full block ">We take pride in our achievements and commitment to excellence. Join us in
         celebrating innovation, growth, and success.</span>
-      <div class=" flex justify-between gap-6">
-        <div class=" flex flex-col gap-1 items-center">
-          <IcongraduateFill class="text-blue" />
+      <div class=" flex justify-between gap-6 w-max1000 ">
+        <div class=" flex flex-col gap-1 items-center  grow">
+          <IcongraduateFill class="text-blue " />
           <h1 class=" text-blue text-3xl font-[700]">4+</h1>
           <span class="text-lg">Courses</span>
         </div>
 
-        <div class=" flex flex-col gap-1 items-center">
+        <div class=" flex flex-col gap-1 items-center  border-x grow not-darkmode:border-neutral-300 darkmode:border-neutral-900">
           <IconGradMan class="text-blue" />
           <h1 class=" text-blue text-3xl font-[700]">4+</h1>
           <span class="text-lg">Courses</span>
         </div>
 
 
-        <div class=" flex flex-col gap-1 items-center ">
+        <div class=" flex flex-col gap-1 items-center grow ">
           <iconClock class="text-blue" />
           <h1 class="text-blue  text-3xl font-[700]">4+</h1>
           <span class="text-lg">Courses</span>

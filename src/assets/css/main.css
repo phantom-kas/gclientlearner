@@ -55,17 +55,24 @@
 
 
     --container-min495: min(495px, 100%);
-    --container-max300: min(300, 100%);
-    --container-max200: min(200, 100%);
-    --container-max100: min(100, 100%);
+    --container-max300: min(300px, 100%);
+    --container-max400: min(400px, 100%);
+    --container-max500: min(500px, 100%);
+    --container-max450: min(450px, 100%);
+    --container-max350: min(350px, 100%);
+    --container-max200: min(200px, 100%);
+    --container-max100: min(100px, 100%);
     --container-max1200: min(1200px, 100%);
     --container-max1000: min(1000px, 100%);
-    --container-max150: min(150, 100%);
+    --container-max700: min(700px, 100%);
+    --container-max150: min(150px, 100%);
     --container-sidebar300: min(300px, calc(100% - 2rem));
 
 
 }
-
+.link1{
+    @apply text-blue hover:border-b-blue hover:border-b
+}
 .plr {
     @apply px-6
 }

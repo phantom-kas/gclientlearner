@@ -8,7 +8,25 @@ import quill_input from '@/components/form_components/quill_input.vue';
 import range from '@/components/form_components/range.vue';
 import { anyCurrency } from '@/composabels/utilities';
 import blueButton from '@/components/buttons/blueButton.vue';
+import { useauthStore } from '@/stores/auth';
+import { useUserStore } from '@/stores/user';
 const data = ref({} as any)
+
+const auth = useauthStore()
+const user = useUserStore()
+const handelSubmit = () => {
+    auth.data = data.value
+    auth.signUp().then(res => {
+        if (!res) return
+        if (res.data.status != 'success') return
+        data.value = {}
+        // redirect to login page
+        // window.location.href = '/login'
+        user.setUserInfo({ ...res.data.data, refreshToken: undefined, accessToken: undefined });
+        user.SetTokens(res.data.data.refreshToken, res.data.data.accessToken);
+        
+    })
+}
 </script>
 <template>
     <div
@@ -19,7 +37,7 @@ const data = ref({} as any)
         <h1 class="w-max1000 font-[500] text-3xl mb-6">
             Complete payment
         </h1>
-        <div class=" flex sm:flex-row gap-y-4 gap-x-4  w-max1000 items-start justify-between flex-col">
+        <form class=" flex sm:flex-row gap-y-4 gap-x-4  w-max1000 items-start justify-between flex-col">
 
             <div class=" p-5 w-min495 theme1cont gap-y-4 flex flex-col relative grow">
                 <input2 :icon="['far', 'user']" class="w-full" :data label="First Name" name="firstName" />
@@ -40,7 +58,7 @@ const data = ref({} as any)
                 <span class=" font-[600] text-2xl">
                     {{ anyCurrency(350 * 100) }}
                 </span>
-                <range label="Select amount" class=" w-full py-2">
+                <range name="amount" label="Select amount" class=" w-full py-2">
                     <template #value="{ value }">
                         {{ anyCurrency(value * 100) }}
                     </template>
@@ -51,6 +69,6 @@ const data = ref({} as any)
                     </template>
                 </blueButton>
             </div>
-        </div>
+        </form>
     </section>
 </template>

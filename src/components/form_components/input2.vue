@@ -95,7 +95,7 @@ onMounted(() => {
         <slot>
             <FontAwesomeIcon size="lg" :icon />
         </slot>
-        <input ref='input' :type id="floating_input" placeholder=" "
+        <input :required :name :type :placeholder @input="e => { checkValid((e.target as HTMLInputElement)?.value); vData[name] = (e.target as HTMLInputElement)?.value, $emit('input', { name: name, value: (e.target as HTMLInputElement)?.value }) }" ref='input' id="floating_input"
             class="peer w-full px-4 pt-5 pb-2 pl-3    rounded  text-sm placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue focus:border-blue" />
         <div v-if="type == 'password'" @click="handelToggleSeen()"
             class=" right-2 absolute cursor-pointer z-50  flex items-center justify-center theme2cont">
