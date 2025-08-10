@@ -14,7 +14,7 @@ const props = defineProps({
 const tracks = ref([] as any[])
 const hasLoaded = ref(false)
 onMounted(() => [
-    axios.get('/tracks', { params: { limit:props.limit } }).then((res) => {
+    axios.get('/tracks', { params: { limit:props.limit,orderbyratds:1} }).then((res) => {
         if (res.data.status != 'success') return
         tracks.value = res.data.data
         hasLoaded.value = true
@@ -27,6 +27,7 @@ onMounted(() => [
         <template v-for="t, i in tracks" :key="t.id">
             <slot name="item" v-bind="{ item: t, i: i }">
                 <trackCOmponent2 :track="t" />
+                
             </slot>
         </template>
     </div>

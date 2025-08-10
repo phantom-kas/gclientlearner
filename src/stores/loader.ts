@@ -3,11 +3,12 @@ export const useLoaderStore = defineStore('loader', {
   state: () => ({
     loading: false,
     loading2: false,
-    isUploading:false,
-    uploadProgress:0,
+    loadSplash: false,
+    isUploading: false,
+    uploadProgress: 0,
     duration: 200,
     min: 'dsadas',
-    showSuccess:false
+    showSuccess: false
   }),
   getters: {
     isLoading(): boolean {
@@ -19,12 +20,13 @@ export const useLoaderStore = defineStore('loader', {
     isLoading2(): boolean {
       return this.loading2
     },
+
     getDuration(): number {
       return this.duration
     },
   },
   actions: {
-    showUploading(){
+    showUploading() {
       this.isUploading = true
     },
     start() {
@@ -32,7 +34,13 @@ export const useLoaderStore = defineStore('loader', {
     },
     alertSuccess() {
       this.showSuccess = true
-      setTimeout(()=>this.showSuccess = false, 2000)
+      setTimeout(() => this.showSuccess = false, 2000)
+    },
+    startSplash() {
+      this.loadSplash = true
+    },
+    stopSplash() {
+      this.loadSplash = false
     },
     start2() {
       this.loading2 = true

@@ -79,9 +79,21 @@ export const useauthStore = defineStore('auth', () => {
     axios.get('send_verify_email', { _load: true, _showAllMessages: true })
   }
 
+  const logout = () => {
+    axios.post('logout', {
+      refreshToken: user.getRToken,
+    }).then(res => {
+      if (res.data.status != 'success') return
+      user.SetTokens(null, null);
+      axios.defaults.headers.common["Authorization"] = ''
+      router.push({ name: 'login' })
+    })
+  }
+
   return {
     signUp,
     data,
+    logout,
     loading,
     resetPassword,
     sigin,

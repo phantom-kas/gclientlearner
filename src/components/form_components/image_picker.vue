@@ -146,7 +146,7 @@ const handlepreview = async () => {
 </script>
 <template>
   <section class="flex flex-col items-center w-full pt-8 theme1cont"  v-bind="$attrs">
-    <div class="w-full flex justify-center">
+    <div class="w-full flex justify-center " v-show="imageSrc">
       <!-- <img ref="img" class=" hidden w-0 h-0" alt="" /> -->
 
       <cropper-canvas scale-step="0.1" theme-color="#39f" :key="imageSrc" background class="  h-[50vh] w-min495">
@@ -185,7 +185,7 @@ const handlepreview = async () => {
       <button @click="clearFile()" type="button"
         class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 flex items-center gap-1">
         Clear
-        <FontAwesomeIcon :icon="['fas', 'trash']" />
+        <FontAwesomeIcon :icon="['far', 'trash-can']" />
       </button>
 
       <button @click="handlepreview()" type="button" class="px-4 py-2 bg-primary text-white rounded hover:opacity-90"

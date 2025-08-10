@@ -27,31 +27,48 @@ const props = defineProps({
         default: true
     }
 })
-
-
-
-
 const listItems = ref<any[]>([])
-const emit = defineEmits(['fullList'])
-// const thisPageItems = ref<any[]>([])
+const emit = defineEmits(['fullList','paginationList'])
 const lastId = ref<string | undefined>(undefined)
 const loaded = ref(false)
-const fetchContent = async () => {
-    return await axios.get(props.url as string, { params: { ...props.params, limit: props.itemsPerPage, lastId: lastId.value } }).then(res => {
-        if (res.data.status != 'success') return
+let loadedPages = [] as any[]
+const fetchContent = async (order = 1) => {
+    if (loadedPages[data.value['currentPage'] * props.itemsPerPage] != undefined) {
+        // console.log(data.value['currentPage'] * props.itemsPerPage)/
+        console.log('***************Load page '+data.value['currentPage']+' From Memory*************')
+        let start = (data.value['currentPage'] - 1)* props.itemsPerPage
+        listItems.value = loadedPages.slice(start,props.itemsPerPage + start)
+        // console.log(listItems.value)
+        // lastId.value = loadedPages[data.value['currentPage']][props.itemsPerPage - 2][props.idParam]
+    }
+    else {
+        await axios.get(props.url as string, { params: { ...props.params, limit: props.itemsPerPage, lastId: lastId.value } }).then(res => {
+            if (res.data.status != 'success') return
 
-        listItems.value = res.data.data
-        if (res.data.data.length < props.itemsPerPage + 1) {
-            lastId.value = undefined
-            data.value.showNext = false
-            return
-        } else {
-            data.value.showNext = true
-        }
-        lastId.value = res.data.data[props.itemsPerPage - 2][props.idParam]
-    })
+            if(data.value['currentPage'] > 1){
+                loadedPages=loadedPages.concat(res.data.data.slice(1))
+            }else{
+                loadedPages=loadedPages.concat(res.data.data)
+            }
+            listItems.value = res.data.data
+
+        })
+    }
+
+    // console.log((data.value['currentPage'] * props.itemsPerPage))
+    console.log(loadedPages)
+    // console.log((data.value['currentPage'] * props.itemsPerPage))
+    if (loadedPages[(data.value['currentPage'] * props.itemsPerPage)] == undefined) {
+        lastId.value = undefined
+        data.value.showNext = false
+        return
+    } else {
+        data.value.showNext = true
+    }
+    lastId.value = loadedPages[(data.value['currentPage'] * props.itemsPerPage) -1][props.idParam]
+
 }
-const data = ref({ currentPage: 1, showNext: true  })
+const data = ref({ currentPage: 1, showNext: true })
 const paginatedItems = computed(() => {
     // const start = (data.value.currentPage - 1) * props.itemsPerPage
     return listItems.value.slice(0, props.itemsPerPage)
@@ -60,32 +77,25 @@ const paginatedItems = computed(() => {
 onMounted(async () => {
     await fetchContent()
     emit('fullList', listItems)
+    emit('paginationList', loadedPages)
 
 })
 </script>
 <template>
-    <!-- <div class="w-full flex flex-col gap-y-4"> -->
-    <painationElement @changePage="fetchContent()" v-if="showPaginationControls" :data :itemsPerPage />
-    <component v-bind="$attrs" :is="component" class="w-full @container">
+    <!-- {{ data }} -->
+    <painationElement @prev="fetchContent(-1)" @changePage="fetchContent()" v-if="showPaginationControls" :data
+        :itemsPerPage />
+    <component :class="$attrs.class"  :is="component" class="w-full @container overflow-x-clip">
         <slot name="table_header">
-
         </slot>
-        <!-- <tbody> -->
-            <!-- {{ lastId}} -->
         <transition-group name="list">
-
             <template v-for="item, i in paginatedItems" :key="item[idParam]">
                 <slot name="items" v-bind="{ item, i }">
                     {{ item }}
                 </slot>
             </template>
         </transition-group>
-        <!-- {{ data }}
-        {{ lastId }}
-        {{ idParam }} -->
-        <!-- </tbody> -->
     </component>
     <painationElement @changePage="fetchContent()" v-if="showPaginationControls" :data :itemsPerPage />
-    <!-- </div> -->
 </template>
 <style scoped></style>

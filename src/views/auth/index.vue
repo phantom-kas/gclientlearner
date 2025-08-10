@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 </script>
 <template>
 
-    <section class=" flex flex-col items-center justify-end w-full bg-blue darkmode:bg-neutral-900 sm:pt-15 max-sm:sticky inset-0 z-50 shadow-sm">
+    <section class=" flex flex-col items-center justify-end w-full bg-blue darkmode:bg-neutral-900 sm:pt-15 max-sm:sticky inset-0 z-50 shadow-sm ">
         <div
             class=" flex flex-row justify-between sm:justify-start items-end  text-3xl font-[700] theme1cont w-max1200">
             <authnavLink :to="{name:'dashboard'}" text="Dashboard">
@@ -23,7 +23,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                     <FontAwesomeIcon size="lg" :icon="['far', 'envelope']" />
                 </template>
             </authnavLink>
-            <authnavLink text="Invoice">
+            <authnavLink :to="{name:'invoices'}" text="Invoice">
                 <template #icon>
                     <FontAwesomeIcon size="lg" :icon="['fas', 'file-invoice']" />
                 </template>

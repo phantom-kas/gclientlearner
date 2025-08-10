@@ -34,7 +34,7 @@ export const useUserStore = defineStore("useUserStore", () => {
     if (mime) return new Blob([arrayBuffer], { type: mime });
   };
 
-  const SetTokens = (Rtoken: string, AToken: string | null) => {
+  const SetTokens = (Rtoken: string |null, AToken: string | null) => {
     getRToken.value = Rtoken;
     getAToken.value = AToken;
   };
@@ -69,7 +69,7 @@ export const useUserStore = defineStore("useUserStore", () => {
   };
 
 
-  const login = (email: string, password: string) => {
+  const login =async (email: string, password: string) => {
     return axios.post('/login', { email, password }, { _load: true, _showAllMessages: true }).then(res => {
       if (res.data.status != 'success') return res
       console.log(res.data.data);
@@ -80,7 +80,7 @@ export const useUserStore = defineStore("useUserStore", () => {
   }
 
 
-  const isLoggedIn = () => getAToken.value
+  const isLoggedIn = () => !!getAToken.value
   return {
     isLoggedIn,
     getRole,

@@ -1,6 +1,6 @@
 
 <template>
-  <div class="w-16 h-16 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+  <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-100 darkmode:bg-transparent flex items-center justify-center">
     <img
       v-if="!error"
       :src="url"
@@ -10,7 +10,7 @@
     />
     <div v-else class="text-gray-400">
       <svg
-        class="w-8 h-8"
+        class="w-6 h-6"
         fill="none"
         stroke="currentColor"
         stroke-width="1.5"

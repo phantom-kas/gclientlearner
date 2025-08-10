@@ -33,6 +33,10 @@ const props = defineProps({
     icon: {
         type: Object as PropType<[string, string]>,
         default: ['fas', 'trash-can']
+    },
+    disabled:{
+        type:Boolean,
+        default:false
     }
 })
 
@@ -95,7 +99,7 @@ onMounted(() => {
         <slot>
             <FontAwesomeIcon size="lg" :icon />
         </slot>
-        <input :required :name :type :placeholder @input="e => { checkValid((e.target as HTMLInputElement)?.value); vData[name] = (e.target as HTMLInputElement)?.value, $emit('input', { name: name, value: (e.target as HTMLInputElement)?.value }) }" ref='input' id="floating_input"
+        <input :disabled   :value="vData[name] ?? ''" :required :name :type :placeholder @input="e => { checkValid((e.target as HTMLInputElement)?.value); vData[name] = (e.target as HTMLInputElement)?.value, $emit('input', { name: name, value: (e.target as HTMLInputElement)?.value }) }" ref='input' id="floating_input"
             class="peer w-full px-4 pt-5 pb-2 pl-3    rounded  text-sm placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue focus:border-blue" />
         <div v-if="type == 'password'" @click="handelToggleSeen()"
             class=" right-2 absolute cursor-pointer z-50  flex items-center justify-center theme2cont">
@@ -103,7 +107,7 @@ onMounted(() => {
             <IconEye color="#7F7E83" v-else />
         </div>
         <label for="floating_input"
-            class="absolute left-11 top-0  text-sm transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-1 peer-focus:text-sm peer-focus:text-blue-500 "
+            class="absolute left-11 top-0 pointer-events-none  text-sm transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-1 peer-focus:text-sm peer-focus:text-blue-500 "
             v-html="label">
         </label>
     </div>

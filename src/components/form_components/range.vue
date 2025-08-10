@@ -2,45 +2,45 @@
 import type { PropType } from 'vue';
 import { onBeforeMount, onMounted, ref } from 'vue'
 const props = defineProps({
-    label: {
-        type: String,
-        default: 'Select Label'
-    },
-    // placeholder: {
-    //     type: String,
-    //     default: ''
-    // },
-    val: {
-        type: [String, Number] as PropType<string | number>,
-        default: null
-    },
-    required: {
-        type: Boolean,
-        default: false
-    },
-    data: {
-        type: Object
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    // options: {
-    //     type: Array as PropType<{ value: string | number; label: string }[]>,
-    //     required: true
-    // },
-    // icon: {
-    //     type: Object as PropType<[string, string]>,
-    //     default: ['fas', 'trash-can']
-    // },
-     max: {
-        type: Number,
-        default: 100
-    },
-     min: {
-        type: Number,
-        default: 0
-    },
+  label: {
+    type: String,
+    default: 'Select Label'
+  },
+  // placeholder: {
+  //     type: String,
+  //     default: ''
+  // },
+  val: {
+    type: [String, Number] as PropType<string | number>,
+    default: null
+  },
+  required: {
+    type: Boolean,
+    default: false
+  },
+  data: {
+    type: Object
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  // options: {
+  //     type: Array as PropType<{ value: string | number; label: string }[]>,
+  //     required: true
+  // },
+  // icon: {
+  //     type: Object as PropType<[string, string]>,
+  //     default: ['fas', 'trash-can']
+  // },
+  max: {
+    type: Number,
+    default: 100
+  },
+  min: {
+    type: Number,
+    default: 0
+  },
 })
 
 const vData = ref(props.data ?? {})
@@ -49,48 +49,41 @@ const isInvalid = ref(false)
 const msg = ref<string | null>(null)
 
 onBeforeMount(() => {
-    // if(!vData.value[props.name]){
-    //     vData.value[props.name] = null
-    // }
-    if (props.data) {
-        vall.value = props.data[props.name] ?? ''
-    }
+  // if(!vData.value[props.name]){
+  //     vData.value[props.name] = null
+  // }
+  if (props.data) {
+    vall.value = props.data[props.name] ?? ''
+  }
 })
 
 const checkValid = (e: string | number) => {
-    if (!props.data?.validate) return
-    if (!e) {
-        msg.value = 'This field is required'
-        isInvalid.value = true
-    } else {
-        msg.value = null
-        isInvalid.value = false
-    }
+  if (!props.data?.validate) return
+  if (!e) {
+    msg.value = 'This field is required'
+    isInvalid.value = true
+  } else {
+    msg.value = null
+    isInvalid.value = false
+  }
 }
 
 onMounted(() => {
-    checkValid(vall.value)
+  checkValid(vall.value)
 })
 </script>
 
 <template>
   <div class="">
     <label class="block text-sm font-medium  mb-1">
-      {{label}}: <span class="font-bold">
-        <slot name="value" v-bind="{value:vData[name]}">
-            {{ vData[name] }}
+      {{ label }}: <span class="font-bold">
+        <slot name="value" v-bind="{ value: vData[name] }">
+          {{ vData[name] }}
         </slot>
       </span>
     </label>
-
-    <input
-      type="range"
-     v-model="vData[name]"
-      :min
-      :max
-      step="1"
-      class=" w-full"
-    />
+    <!-- {{ vData[name] }} -->
+    <input  :value="vData[name] ?? ''" type="range" @input="e => { checkValid((e.target as HTMLInputElement)?.value); vData[name] = (e.target as HTMLInputElement)?.value, $emit('input', { name: name, value: (e.target as HTMLInputElement)?.value }) }"  :min :max step="1" class=" w-full" />
   </div>
 </template>
 <style scoped>

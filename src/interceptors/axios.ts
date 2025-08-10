@@ -20,6 +20,7 @@ declare module 'axios' {
   export interface AxiosRequestConfig {
     _load?: boolean,
     _load2?: boolean,
+    _loadSplash?: boolean,
     _showAllMessages?: boolean
     _showSuccessOnly?: boolean
     _showErrorOnly?: boolean,
@@ -49,6 +50,14 @@ axios.interceptors.request.use((req) => {
       console.log("begin loading");
       const loader = useLoaderStore();
       loader.start2();
+    }
+  }
+
+  if (req._loadSplash !== undefined) {
+    if (req._loadSplash) {
+      console.log("begin splash loading");
+      const loader = useLoaderStore();
+      loader.startSplash();
     }
   }
 
@@ -102,7 +111,8 @@ axios.interceptors.response.use(
     const loader = useLoaderStore();
     loader.stop2();
     loader.stop();
-
+    loader.stopSplash();
+    
 
     const originalRequest = error.config;
     const user = useUserStore();
@@ -110,7 +120,7 @@ axios.interceptors.response.use(
     const alerts = useToastStore();
 
     if (error.response) {
-      refresh && alerts.addToast(
+      ((refresh && error.response.status == 401) || (error.response.status != 401)) && alerts.addToast(
         error.response.data.message,
         error.response.data.status,
         "s"

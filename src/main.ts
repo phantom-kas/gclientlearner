@@ -12,10 +12,11 @@ import {
     faCalendar,
     faUser,
     faEnvelope,
+    faStar as farStar,
     
 } from "@fortawesome/free-regular-svg-icons";
 
-import {faPhone,faLocationDot,faFileInvoice, faPerson,faGear, faGraduationCap, faRightToBracket,faArrowDown, faChevronDown,faFilePen, faPencilAlt, faEllipsis, faTrashCan, faCircleXmark, faTrash, faArrowsUpToLine, faFileArrowUp, faPlus, faMagnifyingGlass, faBars, faTriangleExclamation, faCircleInfo, faXmark, faMoon, faDesktopAlt, faDesktop, faSun, faAngleLeft, faAngleRight, faLock } from "@fortawesome/free-solid-svg-icons";
+import {faPhone,faStar  ,faLocationDot,faFileInvoice, faPerson,faGear, faGraduationCap, faRightToBracket,faArrowDown, faChevronDown,faFilePen, faPencilAlt, faEllipsis, faTrashCan, faCircleXmark, faTrash, faArrowsUpToLine, faFileArrowUp, faPlus, faMagnifyingGlass, faBars, faTriangleExclamation, faCircleInfo, faXmark, faMoon, faDesktopAlt, faDesktop, faSun, faAngleLeft, faAngleRight, faLock, faAngleDown, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import App from './App.vue'
 import router from './router'
 import "./interceptors/axios";
@@ -24,10 +25,14 @@ import "./interceptors/axios";
 
 library.add(
     faPerson,
+    faStar,
+    farStar,
+    faArrowRightFromBracket,
     faFileInvoice,
     faAngleLeft,
     faAngleRight,
     faLock,
+    faAngleDown,
     // faEnvelope,
     faGear,
     faPhone,

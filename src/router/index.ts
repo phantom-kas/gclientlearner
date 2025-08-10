@@ -32,12 +32,26 @@ const router = createRouter({
               component: () => import('../views/tracks/track.vue'),
               props: (route: { params: { id: string } }) => ({
                 id: route.params.id
-              })
+              }),
+              children: [
+                {
+                  path: 'reviews',
+                  name: 'reviews',
+                  component: () => import('../views/tracks/tracks.vue'),
+                },]
             },
             {
               path: '/checkout/:id',
               name: 'checkout',
               component: () => import('../views/checkout/checkout.vue'),
+              props: (route: { params: { id: string } }) => ({
+                id: route.params.id
+              })
+            },
+            {
+              path: '/payment/:id',
+              name: 'payment',
+              component: () => import('../views/checkout/payment.vue'),
               props: (route: { params: { id: string } }) => ({
                 id: route.params.id
               })
@@ -58,6 +72,20 @@ const router = createRouter({
               path: '/settings',
               name: 'settings',
               component: () => import('../views/auth/settings.vue'),
+              children: [
+                {
+                  path: 'change_image',
+                  name: 'change_image',
+                  component: () => import('../views/auth/settings.vue'),
+
+                }
+              ]
+            },
+            {
+              path: '/invoices',
+              name: 'invoices',
+              component: () => import('../views/auth/invoices.vue'),
+
             }
           ]
         },

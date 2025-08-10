@@ -7,12 +7,21 @@ import buttonWhite from './buttons/buttonWhite.vue';
 import blueButton from './buttons/blueButton.vue';
 import overlayfixed from './overlayfixed.vue';
 import { ref } from 'vue';
+import { useUserStore } from '@/stores/user';
+import Dropdown from './menus/dropdown.vue';
+import AvatarImage from './avatars/avatarImage.vue';
+import { useauthStore } from '@/stores/auth';
+import { getImageUrl } from '@/composabels/utilities';
+
 const theme = useThemeStore()
 const darkModelOpen = ref(false)
 const isOpen = ref(true)
 const handelToggle = () => {
     isOpen.value = !isOpen.value
 }
+
+const user = useUserStore()
+const auth = useauthStore()
 </script>
 <template>
     <header
@@ -42,29 +51,40 @@ const handelToggle = () => {
                         <FontAwesomeIcon v-else="theme.value == 'dark'" size="xl" :icon="['fas', 'desktop-alt']" />
                     </template>
                 </themeSelect>
-                <router-link class="flex flex-col justify-start items-start" :to="{ name: 'login' }">
-                    <blueButton class="sm:w-[unset] w-full ">
-                        <template #label>
+                <template v-if="!user.isLoggedIn()">
+                    <router-link class="flex flex-col justify-start items-start" :to="{ name: 'login' }">
+                        <blueButton class="sm:w-[unset] w-full ">
+                            <template #label>
+                                <div class=" flex gap-4 items-center">
+                                    <span>Login</span>
+                                    <FontAwesomeIcon size="lg" :icon="['fas', 'right-to-bracket']" />
+                                </div>
+                            </template>
+                        </blueButton>
+                    </router-link>
+                    <router-link class="flex flex-col justify-start items-start" :to="{ name: 'signup' }">
+                        <buttonWhite class="sm:w-[unset] w-full mt-5 mb-5 sm:mb-0 sm:mt-[unset]">
                             <div class=" flex gap-4 items-center">
-                                <span>Login</span>
+                                <span>Sign Up</span>
                                 <FontAwesomeIcon size="lg" :icon="['fas', 'right-to-bracket']" />
                             </div>
-                        </template>
-                    </blueButton>
-                </router-link>
-                <router-link class="flex flex-col justify-start items-start" :to="{ name: 'signup' }">
-
-                    <buttonWhite class="sm:w-[unset] w-full mt-5 mb-5 sm:mb-0 sm:mt-[unset]">
-                        <div class=" flex gap-4 items-center">
-                            <span>Sign Up</span>
-                            <FontAwesomeIcon size="lg" :icon="['fas', 'right-to-bracket']" />
+                        </buttonWhite>
+                    </router-link>
+                </template>
+                <Dropdown @logout="auth.logout()" v-else class="rounded-3xl!" :options="[
+                    {label:'Portal',icon:['fas','graduation-cap'],isLink:true,to:{name:'dashboard'},emit:'nein'},
+                    {label:'settings',icon:['fas','gear'],isLink:true,to:{name:'settings'},emit:'nein'},
+                    {label:'Logout',icon:['fas','arrow-right-from-bracket'],isLink:false,to:{name:'dashboard'},emit:'logout'}
+                    ]">
+                    <template #btn>
+                        <div class=" pointer-events-none flex gap-4 items-center text-neutral-400 pr-0.5">
+                            <AvatarImage :url="getImageUrl(user.userInfo.image)" />
+                            <FontAwesomeIcon :icon="['fas','angle-down']"/>
                         </div>
-                    </buttonWhite>
-                </router-link>
+                    </template>
+                </Dropdown>
             </div>
         </div>
-
-
     </header>
 </template>
 <style></style>
