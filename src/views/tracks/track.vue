@@ -73,6 +73,7 @@ const dispalyRatingData = ref(null as number | null)
     <!-- <div class=" flex flex-col justify-center items-center p-13 bg-blue w-full text-3xl font-[700] text-white">
         Tracks
     </div> -->
+    
     <!-- {{ ratingDetailes }} -->
     <section class="plr flex flex-col items-center justify-start w-full py-13 overflow-clip">
         <div

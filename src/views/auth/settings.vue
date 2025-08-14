@@ -195,7 +195,7 @@ const handelPasswordUpdate = () => {
 
         <screen2 @close="router.go(-1)" v-if="route.name == 'change_image'" to="#modal2" defer>
 
-            <image_picker :aspectRatio="1.422" @crop="(e: any) => handelImageChange(e)" class="z-[1000] my-auto" />
+            <image_picker :aspectRatio="1" @crop="(e: any) => handelImageChange(e)" class="z-[1000] my-auto" />
 
         </screen2>
     </section>
