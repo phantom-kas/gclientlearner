@@ -24,6 +24,7 @@ export const getImageUrl = (name: string) => {
     const base = new URL(axios.defaults.baseURL as string).origin
     return base + name
   }
+  console.log('img == ',name)
   return name
 }
 
@@ -58,4 +59,14 @@ export const urlAuthUnAuth = (gestUrl: string, authUrl: string | null = null) =>
     return authUrl
   }
   return gestUrl
+}
+
+export function debounce(cb:Function, delay: number) {
+  let timeOut: number;
+  return (...args: any) => {
+    clearTimeout(timeOut);
+    timeOut = setTimeout(() => {
+      cb(...args);
+    }, delay);
+  };
 }

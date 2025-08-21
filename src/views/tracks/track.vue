@@ -22,7 +22,7 @@ const props = defineProps({
 })
 
 const loading = ref(true)
-const track = ref({} as { [key: string]: string })
+const track = ref({} as { [key: string]: string | number })
 const courses = ref([] as { [key: string]: string }[])
 onMounted(() => {
     let url = urlAuthUnAuth('/track-courses/' + props.id, 'learner/track/' + props.id)
@@ -34,7 +34,7 @@ onMounted(() => {
         courses.value = res.data.data.courses
         dispalyRatingData.value = parseInt(track.value.total_ratings + '') / parseInt(track.value.num_rating + '')
         if (track.value.ratings_deatails)
-            ratingDetailes.value = JSON.parse(track.value.ratings_deatails)
+            ratingDetailes.value = JSON.parse(track.value.ratings_deatails as string)
     })
 
 
@@ -42,6 +42,12 @@ onMounted(() => {
 })
 const showRatingEdit = ref(false)
 
+const updateDisplayRating = (rate: number) => {
+    track.value.num_rating = (parseInt(track.value.num_rating + '') + 1)
+    track.value.total_ratings = parseInt(track.value.total_ratings + '') + rate
+    ratingDetailes.value[rate] = parseInt(ratingDetailes.value[rate]+'') + 1
+    dispalyRatingData.value = track.value.total_ratings / track.value.num_rating
+}
 
 const ratingData = ref({ rating: 0, review: '', loading: false })
 
@@ -59,7 +65,8 @@ const handelSubmitReview = () => {
             ratingData.value.loading = false
             if (res.data.status != 'success') return
 
-
+            updateDisplayRating(ratingData.value.rating)
+            showRatingEdit.value = false
 
         })
 }
@@ -73,8 +80,9 @@ const dispalyRatingData = ref(null as number | null)
     <!-- <div class=" flex flex-col justify-center items-center p-13 bg-blue w-full text-3xl font-[700] text-white">
         Tracks
     </div> -->
-    
+
     <!-- {{ ratingDetailes }} -->
+    <!-- {{ track }} -->
     <section class="plr flex flex-col items-center justify-start w-full py-13 overflow-clip">
         <div
             class=" grid gap-y-4  w-max1200   tet-sm place-content-start gap-x-4 grid-cols-1 sm:grid-cols-[1fr_min(400px,100%)]">
@@ -97,7 +105,7 @@ const dispalyRatingData = ref(null as number | null)
                         <span class=" font-[500]">{{ anyCurrency(track.price) }}</span>
                     </div>
 
-                    <div @click="router.push({ name: 'reviews' })" v-if="dispalyRatingData"
+                    <div @click="router.push({ name: 'reviews' })" v-if="dispalyRatingData !== null"
                         class=" flex flex-col gap-0 grow cursor-pointer">
                         <span class=" flex gap-4 items-end">{{ track.num_rating }} review{{ parseInt(track.num_rating +
                             '') != 1 ? 's' : '' }}
@@ -109,7 +117,7 @@ const dispalyRatingData = ref(null as number | null)
 
                         <span class=" font-[500] flex items-end justify-start gap-3">
                             <rating :rating="dispalyRatingData" />
-                            <span> {{ (dispalyRatingData as number).toFixed(1) }}/5</span>
+                            <span> {{ (dispalyRatingData as number).toFixed(1) }}/5.0</span>
                         </span>
                         <!-- <editRating /> -->
                     </div>
@@ -187,7 +195,7 @@ const dispalyRatingData = ref(null as number | null)
             <h1 class=" text-3xl">Rate This Track</h1>
             <editRating @star="e => { ratingData.rating = e }" :num_stars="ratingData.rating"
                 :key="ratingData.rating" />
-            <quill_input placeholder="Review (Optional)" />
+            <quill_input @inputed="e => ratingData.review = e" placeholder="Review (Optional)" />
             <blueButton :is-load="ratingData.loading" class=" w-full">
                 <template #label>
                     Submit
@@ -196,11 +204,11 @@ const dispalyRatingData = ref(null as number | null)
         </form>
         <div v-else class=" w-max500   z-30 theme1cont p-8 mt-12 ">
             <h1 class=" text-4xl font-[500] mb-6">
-                {{track.num_rating}} Reviews{{ parseInt(track.num_rating + '') != 1 ? 's' : '' }}
+                {{ track.num_rating }} Review{{ parseInt(track.num_rating + '') != 1 ? 's' : '' }}
             </h1>
             <div class=" w-full flex flex-col gap-3 mb-8">
                 <div v-for="i in 5" class=" w-full flex gap-2">
-                    {{ i }} 
+                    {{ i }}
                     <div class=" w-full relative flex  shadow-sm bg-neutral-200 darkmode:bg-neutral-600 rounded-sm">
                         <span
                             :style="{ width: ((parseInt(ratingDetailes[i] + '') / parseInt(track.num_rating) * 100) + '') + '%' }"
@@ -235,7 +243,7 @@ const dispalyRatingData = ref(null as number | null)
 @reference "../../assets/css/main.css";
 
 .coursebds>div {
-    @apply border-b-neutral-200 darkmode:border-b-neutral-800! border-b-1 py-4 pr-6 flex justify-between items-center text-sm
+    @apply border-b-neutral-200 darkmode:border-b-neutral-800 ! border-b-1 py-4 pr-6 flex justify-between items-center text-sm
 }
 
 .bsdd {

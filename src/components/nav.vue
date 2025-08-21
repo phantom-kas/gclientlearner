@@ -12,6 +12,8 @@ import Dropdown from './menus/dropdown.vue';
 import AvatarImage from './avatars/avatarImage.vue';
 import { useauthStore } from '@/stores/auth';
 import { getImageUrl } from '@/composabels/utilities';
+import IconSun from './icons/IconSun.vue';
+import IconMoon from './icons/IconMoon.vue';
 
 const theme = useThemeStore()
 const darkModelOpen = ref(false)
@@ -42,13 +44,17 @@ const auth = useauthStore()
             <div :class="{ 'flex': isOpen, 'hidden sm:flex': !isOpen }"
                 class=" grow gap-x-6 sm:pl-6 items-start flex-col sm:flex-row sm:items-center sm:gap-y-6  z-50 sm:relative top-20 sm:top-[unset] w-full sm:w-[unset]">
                 <router-link class=" font-[400] link_sidebar " to="/">Home</router-link>
-                <router-link class=" font-[400] link_sidebar " :to="{ name: 'top-tracks' }">Courses</router-link>
+                <router-link class=" font-[400] link_sidebar " :to="{ name: 'tracks' }">Tracks</router-link>
                 <themeSelect class=" sm:ml-auto link_sidebar mt-auto sm:mt-[unset] mb-5 sm:mb-0" v-model="darkModelOpen"
                     @click="darkModelOpen = !darkModelOpen">
                     <template #menubutton>
-                        <FontAwesomeIcon v-if="theme.value == 'light'" size="xl" :icon="['far', 'sun']" />
-                        <FontAwesomeIcon v-else-if="theme.value == 'dark'" size="xl" :icon="['fas', 'moon']" />
-                        <FontAwesomeIcon v-else="theme.value == 'dark'" size="xl" :icon="['fas', 'desktop-alt']" />
+                        <!-- <FontAwesomeIcon v-if="theme.value == 'light'" size="xl" :icon="['far', 'sun']" /> -->
+                        <div class=" pointer-events-none"> 
+                            <IconSun v-if="theme.value == 'light'" />
+                            <IconMoon v-else-if="theme.value == 'dark'" />
+                            <!-- <FontAwesomeIcon v-else-if="theme.value == 'dark'" size="xl" :icon="['fas', 'moon']" /> -->
+                            <FontAwesomeIcon v-else="theme.value == 'dark'" size="lg" :icon="['fas', 'desktop-alt']" />
+                        </div>
                     </template>
                 </themeSelect>
                 <template v-if="!user.isLoggedIn()">
@@ -72,14 +78,14 @@ const auth = useauthStore()
                     </router-link>
                 </template>
                 <Dropdown @logout="auth.logout()" v-else class="rounded-3xl!" :options="[
-                    {label:'Portal',icon:['fas','graduation-cap'],isLink:true,to:{name:'dashboard'},emit:'nein'},
-                    {label:'settings',icon:['fas','gear'],isLink:true,to:{name:'settings'},emit:'nein'},
-                    {label:'Logout',icon:['fas','arrow-right-from-bracket'],isLink:false,to:{name:'dashboard'},emit:'logout'}
-                    ]">
+                    { label: 'Portal', icon: ['fas', 'graduation-cap'], isLink: true, to: { name: 'dashboard' }, emit: 'nein' },
+                    { label: 'settings', icon: ['fas', 'gear'], isLink: true, to: { name: 'settings' }, emit: 'nein' },
+                    { label: 'Logout', icon: ['fas', 'arrow-right-from-bracket'], isLink: false, to: { name: 'dashboard' }, emit: 'logout' }
+                ]">
                     <template #btn>
                         <div class=" pointer-events-none flex gap-4 items-center text-neutral-400 pr-0.5">
                             <AvatarImage :url="getImageUrl(user.userInfo.image)" />
-                            <FontAwesomeIcon :icon="['fas','angle-down']"/>
+                            <FontAwesomeIcon :icon="['fas', 'angle-down']" />
                         </div>
                     </template>
                 </Dropdown>

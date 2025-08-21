@@ -2,6 +2,10 @@
 import authnavLink from '@/components/authnavLink.vue';
 import IconDashboard from '@/components/icons/IconDashboard.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+
+
+
 </script>
 <template>
 
@@ -18,11 +22,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                     <FontAwesomeIcon size="lg" :icon="['fas', 'gear']" />
                 </template>
             </authnavLink>
-            <authnavLink text="Messages">
+            <!-- <authnavLink text="Messages">
                 <template #icon>
                     <FontAwesomeIcon size="lg" :icon="['far', 'envelope']" />
                 </template>
-            </authnavLink>
+            </authnavLink> -->
             <authnavLink :to="{name:'invoices'}" text="Invoice">
                 <template #icon>
                     <FontAwesomeIcon size="lg" :icon="['fas', 'file-invoice']" />
@@ -34,4 +38,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     <router-view />
 </template>
-<style scoped></style>
+<style scoped>
+@reference "../../assets/css/main.css";
+
+
+.router-link-active {
+    @apply  text-blue
+}
+</style>

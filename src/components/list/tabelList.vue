@@ -82,10 +82,10 @@ const emit = defineEmits(['fullList', 'clicked','paginationList'])
 
         <paginationList @paginationList="e=>emit('paginationList', e)" @fullList="e => emit('fullList', e)" id="p1" :class="$attrs" :url :params :id-param :component
             :items-per-page
-            class="w-full text-sm   text-left rtl:text-right text-neutral-500 dark:text-neutral-400 table-auto">
+            class="w-full text-sm   text-left rtl:text-right text-neutral-500 darkmode:text-neutral-400 table-auto">
             <template #table_header>
                 <thead
-                    class="text-xs text-neutral-700 uppercase w-full bg-neutral-100 dark:bg-neutral-700 dark:text-neutral-400 @[1px]:hidden">
+                    class="text-xs text-neutral-700 uppercase w-full bg-neutral-100 darkmode:bg-neutral-700 darkmode:text-neutral-400 @[1px]:hidden">
 
                     <tr>
                         <th v-if="showSelect"></th>
@@ -98,13 +98,13 @@ const emit = defineEmits(['fullList', 'clicked','paginationList'])
             </template>
             <template #items="{ item, i }">
                 <tr @click="$emit('clicked', item)"
-                    :class="{ 'bg-blue-500 text-black': item._selected, 'odd:bg-neutral-100 odd:dark:bg-neutral-900 @[1px]:bg-[unset]! @[1px]:odd:bg-[unset]': !item._selected }"
-                    class=" border-b dark:border-neutral-700 border-neutral-200  @[1px]:flex @[1px]:flex-col  @[1px]:my-4">
+                    :class="{ 'bg-blue-500 text-black': item._selected, 'odd:bg-neutral-100 odd:darkmode:bg-neutral-900 @[1px]:bg-[unset]! @[1px]:odd:bg-[unset]': !item._selected }"
+                    class=" border-b darkmode:border-neutral-700 border-neutral-200  @[1px]:flex @[1px]:flex-col  @[1px]:my-4">
                     <th v-if="showSelect" scope="col" class="p-4">
                         <div class="flex items-center">
                             <input @change="e => item._selected ? item._selected = false : item._selected = true"
                                 id="checkbox-all-search" type="checkbox"
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 darkmode:focus:ring-blue-600 darkmode:ring-offset-gray-800 darkmode:focus:ring-offset-gray-800 focus:ring-2 darkmode:bg-gray-700 darkmode:border-gray-600">
                             <label for="checkbox-all-search" class="sr-only">checkbox</label>
                         </div>
                     </th>

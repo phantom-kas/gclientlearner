@@ -24,7 +24,7 @@ const user = useUserStore()
 const createInvoice = () => {
     return axios.post('/invoice/track', {
         trackId: props.id,
-        price: data.value.amount * 100,
+        price: userPrice.value,
     }).then(res => {
         if (res.data.status != 'success') return
         data.value = {}
@@ -85,7 +85,7 @@ const handelSubmit = () => {
 
 const track = ref({} as { [key: string]: string })
 const loaded = ref(false)
-
+const userPrice  = ref(0)
 onMounted(async () => {
 
     await axios.get('/track/' + props.id, { _loadSplash: true }).then((res) => {
@@ -98,6 +98,7 @@ onMounted(async () => {
         return
     }
 
+    userPrice.value = parseInt(track.value.price)
     data.value.email = user.userInfo.email
     data.value.firstName = user.userInfo.firstName
     data.value.lastName = user.userInfo.lastName
@@ -155,11 +156,12 @@ onMounted(async () => {
                     placeholder="Bio" />
             </div>
 
+            <!-- {{ userPrice }} -->
             <div class="p-5  flex flex-col gap-y-5 theme1cont w-[min(350px,100%)]">
                 <span class=" font-[600] text-2xl">
                     {{ anyCurrency(track.price) }}
                 </span>
-                <range :min="0" :max="Number(track.price)" :data name="amount" label="Select amount"
+                <range @inputed="(e: any)=>userPrice = e.value" :min="0" :max="Number(track.price)" :data name="amount" label="Select amount"
                     class=" w-full py-2">
                     <template #value="{ value }">
                         {{ anyCurrency(value) }}

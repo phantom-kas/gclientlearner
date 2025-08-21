@@ -57,20 +57,22 @@ onBeforeMount(() => {
   }
 })
 
-const checkValid = (e: string | number) => {
-  if (!props.data?.validate) return
-  if (!e) {
-    msg.value = 'This field is required'
-    isInvalid.value = true
-  } else {
-    msg.value = null
-    isInvalid.value = false
-  }
-}
+// const checkValid = (e: string | number) => {
+//   if (!props.data?.validate) return
+//   if (!e) {
+//     msg.value = 'This field is required'
+//     isInvalid.value = true
+//   } else {
+//     msg.value = null
+//     isInvalid.value = false
+//   }
+// }
 
 onMounted(() => {
-  checkValid(vall.value)
+  // checkValid(vall.value)
 })
+
+const emit = defineEmits(['inputed'])
 </script>
 
 <template>
@@ -83,7 +85,7 @@ onMounted(() => {
       </span>
     </label>
     <!-- {{ vData[name] }} -->
-    <input  :value="vData[name] ?? ''" type="range" @input="e => { checkValid((e.target as HTMLInputElement)?.value); vData[name] = (e.target as HTMLInputElement)?.value, $emit('input', { name: name, value: (e.target as HTMLInputElement)?.value }) }"  :min :max step="1" class=" w-full" />
+    <input  :value="vData[name] ?? ''" type="range" @input="e => {  vData[name] = (e.target as HTMLInputElement)?.value; emit('inputed', { name: name, value: (e.target as HTMLInputElement)?.value }) }"  :min :max step="1" class=" w-full" />
   </div>
 </template>
 <style scoped>

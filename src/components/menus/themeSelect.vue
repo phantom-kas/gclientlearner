@@ -118,7 +118,7 @@ onUnmounted(() => {
 
 <template>
     <div class="relative inline-block text-left" ref="menuRef">
-        <div @click="toggleMenu">
+        <div @click="toggleMenu" class="">
 
             <slot name="menubutton">
                 <!-- Toggle Button -->

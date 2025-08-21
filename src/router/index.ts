@@ -6,6 +6,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      name:"google-success",
+      path: "/google-success",
+      component: () => import('../views/googleSucess.vue'),
+    },
+    {
       path: '/base',
       name: 'base',
       component: () => import('../views/index.vue'),
@@ -25,6 +30,11 @@ const router = createRouter({
               path: '/top-tracks',
               name: 'top-tracks',
               component: () => import('../views/tracks/tracks.vue'),
+            },
+            {
+              path: '/tracks',
+              name: 'tracks',
+              component: () => import('../views/tracks/alltracks.vue'),
             },
             {
               path: '/track/:id',

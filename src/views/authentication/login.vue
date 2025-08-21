@@ -6,6 +6,7 @@ import icongoogle from '@/components/icons/icongoogle.vue';
 import { onMounted, ref, type PropType } from 'vue';
 import Input from '@/components/form_components/Input.vue';
 import { useauthStore } from '@/stores/auth';
+import axios from 'axios';
 const props = defineProps({
     data: {
         type: Object as PropType<{ [key: string]: string }>,
@@ -16,13 +17,17 @@ const props = defineProps({
 // const data = ref({email:''})
 const emit = defineEmits(['changeTitle'])
 onMounted(() => {
-    emit('changeTitle', ['Log in to continue your learning journey',null])
+    emit('changeTitle', ['Log in to continue your learning journey', null])
 })
 const auth = useauthStore()
+
+function googleLogin() {
+    window.location.href = axios.defaults.baseURL + "google"; 
+}
 </script>
 <template>
 
-    <div
+    <div @click="googleLogin()"
         class=" p-2 w-full border-blue border-2 flex gap-4 justify-center rounded hover:bg-neutral-100 cursor-pointer text-blue font-[500]">
         <icongoogle /> <span class="">Log in using Google</span>
     </div>
@@ -30,7 +35,7 @@ const auth = useauthStore()
 
     <input2 :data :icon="['far', 'envelope']" class=" w-full" name="email" label="Email" />
     <input2 :data :icon="['fas', 'lock']" class=" w-full" name="password" type="password" label="Password" />
-    <router-link :to="{name:'forgot-password'}" class=" link1">Forgot password ?</router-link>
+    <router-link :to="{ name: 'forgot-password' }" class=" link1">Forgot password ?</router-link>
     <blueButton :is-load="auth.loading" class=" w-full">
         <template #label>
             <div class="flex gap-4 justify-center items-center">
@@ -40,7 +45,7 @@ const auth = useauthStore()
         </template>
     </blueButton>
 
-    <span class=" w-full text-center">Need to create an account ? <router-link :to="{name:'signup'}"
+    <span class=" w-full text-center">Need to create an account ? <router-link :to="{ name: 'signup' }"
             class=" link1">signup</router-link></span>
 </template>
 <style scoped></style>

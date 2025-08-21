@@ -9,6 +9,7 @@
     role="img"
     :aria-label="`${rating} out of ${maxStars}`"
   ></div>
+  
 </template>
 
 <script setup lang="ts">

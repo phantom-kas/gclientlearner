@@ -6,6 +6,7 @@ import icongoogle from '@/components/icons/icongoogle.vue';
 import { onMounted, ref, type PropType } from 'vue';
 import Input from '@/components/form_components/Input.vue';
 import { useauthStore } from '@/stores/auth';
+import axios from 'axios';
 const props = defineProps({
   data: {
     type: Object as PropType<{ [key: string]: string }>,
@@ -21,9 +22,13 @@ onMounted(() => {
 
 
 const auth = useauthStore()
+
+function googleLogin() {
+    window.location.href = axios.defaults.baseURL + "google"; 
+}
 </script>
 <template>
-  <div
+  <div @click="googleLogin()"
     class=" p-2 w-full border-blue border-2 flex gap-4 justify-center rounded hover:bg-neutral-100 cursor-pointer text-blue font-[500]">
     <icongoogle /> <span class="">Sign up using Google</span>
   </div>

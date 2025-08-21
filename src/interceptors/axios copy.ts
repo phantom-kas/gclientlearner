@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useUserStore } from "@/stores/user";
+import { useAuthStore } from "../stores/auth";
 import router from "../router/index";
 import { useToastStore } from "@/stores/toast";
 import { useLoaderStore } from "../stores/loader";
@@ -9,7 +9,7 @@ import { isDev } from "@/composabels/utilities";
 //;
 
 if (isDev()) {
-  axios.defaults.baseURL = "http://localhost:5000/api/";
+  axios.defaults.baseURL = "http://localhost:3000/";
 } else {
   axios.defaults.baseURL = "https://ci-rest-api.onrender.com/api/"
 }
@@ -20,7 +20,6 @@ declare module 'axios' {
   export interface AxiosRequestConfig {
     _load?: boolean,
     _load2?: boolean,
-    _loadSplash?: boolean,
     _showAllMessages?: boolean
     _showSuccessOnly?: boolean
     _showErrorOnly?: boolean,
@@ -31,7 +30,7 @@ declare module 'axios' {
 }
 
 axios.interceptors.request.use((req) => {
-  const user = useUserStore();
+  const user = useAuthStore();
   if (user.getAToken != undefined && user.getAToken != "") {
     req.headers.Authorization = "Bearer " + user.getAToken;
   } else {
@@ -50,14 +49,6 @@ axios.interceptors.request.use((req) => {
       console.log("begin loading");
       const loader = useLoaderStore();
       loader.start2();
-    }
-  }
-
-  if (req._loadSplash !== undefined) {
-    if (req._loadSplash) {
-      console.log("begin splash loading");
-      const loader = useLoaderStore();
-      loader.startSplash();
     }
   }
 
@@ -111,16 +102,15 @@ axios.interceptors.response.use(
     const loader = useLoaderStore();
     loader.stop2();
     loader.stop();
-    loader.stopSplash();
 
 
     const originalRequest = error.config;
-    const user = useUserStore();
+    const user = useAuthStore();
     const router1 = router;
     const alerts = useToastStore();
 
     if (error.response) {
-      ((refresh && error.response.status == 401) || (error.response.status != 401)) && alerts.addToast(
+      ((!refresh && error.response.status === 401 && (!user.getRToken || user.getRToken == '') ) || (refresh && error.response.status == 401) || (error.response.status != 401)) && alerts.addToast(
         error.response.data.message,
         error.response.data.status,
         "s"
@@ -129,16 +119,27 @@ axios.interceptors.response.use(
       // throw error;
     }
     if (error.response && error.response.status === 401 && !refresh) {
+      refresh = true;
+      // window.alert(user.getRToken)
+      if (!user.getRToken) {
+        // window.alert('r')
+        return
+      }
+      if (user.getRToken == '') {
+        // window.alert('r1')
+        return
+      }
       originalRequest._retry = true;
       c = c + 1;
-      refresh = true;
       let url = "";
-     
+      let data = {
+        refreshToken: user.getRToken,
+      };
       url = "generate_new_access_token";
       return axios({
         url,
         method: "POST",
-       withCredentials: true,
+        data,
       })
         .finally(() => {
         })
@@ -146,7 +147,13 @@ axios.interceptors.response.use(
           return res;
         })
         .then((res) => {
-          user.SetTokens(null, res.data.data.accessToken);
+          // window.alert('o')
+
+          if (res.data.status != 'success') {
+            user.SetTokens(null, '')
+            return
+          }
+          user.SetTokens(res.data.data.refreshToken, res.data.data.accessToken);
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + res.data.data.accessToken;
           originalRequest.headers.Authorization =
@@ -159,6 +166,10 @@ axios.interceptors.response.use(
           return axiosApiInstance(originalRequest);
         })
         .catch((error) => {
+          // if (res.data.status != 'success') {
+          user.SetTokens(null, '')
+          // return
+          // }
           router1.push({ name: "login" });
           alerts.addToast(
             error.response.data.message + c,
@@ -171,14 +182,15 @@ axios.interceptors.response.use(
       refresh = false;
       const alerts = useToastStore();
       const router1 = router;
+      // window.alert('o')
+
       router1.push({ name: "login" });
       return;
-    } 
-    // else if (error.response.status == 403) {
-    //   const router1 = router;
-    //   router1.push({ name: "dashboard" });
-    //   return;
-    // }
+    } else if (error.response.status == 403) {
+      const router1 = router;
+      router1.push({ name: "dashboard" });
+      return;
+    }
     c = 0;
     return Promise.reject(error);
   }

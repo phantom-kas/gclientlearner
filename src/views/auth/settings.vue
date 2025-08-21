@@ -95,6 +95,8 @@ const handelPasswordUpdate = () => {
 
     })
 }
+const imageLoading = ref(true);
+
 </script>
 <template>
     <section class=" flex flex-col items-center justify-end w-full  sm:pt-15 ">
@@ -102,13 +104,19 @@ const handelPasswordUpdate = () => {
             class=" flex  sm:flex-row flex-col justify-between sm:justify-start items-center sm:items-start w-max1200 plr py-30 gap-10">
             <div class=" flex flex-col items-center justify-start w-max300 sm:sticky top-0">
                 <div class="w-[300px] h-[300px] relative">
-                    <img v-if="!imageError" @error="imageError = true" :src="getImageUrl(user.userInfo.image)" alt=""
+                    <!-- {{ imageLoading ?'loading image':'Done' }}
+                    {{ imageError }} -->
+                    <img  @load="imageLoading = false" v-if="!imageError" @error="()=> imageError = true" :src="getImageUrl(user.userInfo.image)" alt=""
                         class=" w-full h-full rounded-[50%]" />
                     <div v-else
                         class=" w-full h-full flex justify-center items-center rounded-[50%] border border-gray-500">
                         <FontAwesomeIcon size="9x" :icon="['far', 'user']" />
                     </div>
+                    <!-- <img :src="getImageUrl(user.userInfo.image)" alt=""
+                        class=" w-full h-full rounded-[50%]" /> -->
+                        <!-- dsadasdasdas -->
                     <button @click="router.push({ name: 'change_image' })"
+
                         class=" absolute w-13 h-13 rounded-4xl right-0 bottom-0 flex flex-col justify-center items-center text-white3 theme1cont cursor-pointer">
                         <FontAwesomeIcon size="2x" :icon="['fas', 'pencil']" />
                     </button>

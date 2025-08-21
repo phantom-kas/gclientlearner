@@ -94,7 +94,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div ref="trigger" class="relative inline-block" @click="toggleDropdown">
+    <div ref="trigger" class="relative inline-block text-xs"  @click="toggleDropdown">
 
         <button :class="$attrs.class" class="px-2 py-1 rounded-sm   darkmode:hover:bg-neutral-800 hover:bg-gray-200 cursor-pointer">
             <slot name="btn">
@@ -105,11 +105,11 @@ onMounted(() => {
         <transition name="fade">
             <div v-if="isOpen" ref="dropdown" :class="dropdownPositionClass"
                 class="absolute z-50 mt-2 w-40  shadow-lg darkmode:border-bg-white3   rounded darkmode:bg-neutral-950 bg-white1 cursor-pointer">
-                <ul class=" w-full flex flex-col  items-center py-2 gap-y-2">
+                <ul class=" w-full flex flex-col  items-center py-1 gap-y-0">
                     <component :is="op.isLink?'router-link':'button'" :to="op.to"  @click="$emit(op.emit)" v-for="op, i in options" :key="i"
-                        class="py-1 px-3 rounded-sm hover:bg-gray-200 darkmode:hover:bg-neutral-800 cursor-pointer w-[90%] gap-x-2 flex items-center">
+                        class="py-2 px-2 rounded-sm hover:bg-gray-200 darkmode:hover:bg-neutral-800 cursor-pointer w-[90%] gap-x-2 flex items-center">
                         <FontAwesomeIcon size="lg" :icon="op.icon" />
-                        <span class="" v-html="op.label"></span>
+                        <span class=" text-xs" v-html="op.label"></span>
                     </component>
 
                 </ul>

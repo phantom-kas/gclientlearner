@@ -11,7 +11,7 @@ const user = useUserStore();
 const hasLoaded = ref(false)
 onMounted(async () => {
   if (!user.isLoggedIn()) {
-    window.alert(user.getRToken)
+    // window.alert(user.getRToken)
     hasLoaded.value = true
     return
   }

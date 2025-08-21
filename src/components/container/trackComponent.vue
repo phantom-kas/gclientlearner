@@ -73,7 +73,7 @@ const cc = () => {
                 {{ track.num_courses ? track.num_courses > 2 ? '+' + (track.num_courses - 2) + ' more' : '' : '' }}
             </div>
 
-            <slot name="action">
+            <!-- <slot name="action">
                 <div @click.stop.prevent v-if="showDropDown" class="w-full flex justify-end text-[14px]">
                     <dropdown @editImage="emit('editImage', { ...track })" @edit="emit('delete', { ...track })"
                         @delete="emit('edit', { ...track })" :options="[
@@ -82,7 +82,7 @@ const cc = () => {
                             { icon: ['far', 'trash-can'], label: 'Delete', emit: 'delete' }
                         ]" />
                 </div>
-            </slot>
+            </slot> -->
         </div>
 
 
