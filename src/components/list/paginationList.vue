@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { computed, onMounted, ref, type PropType } from 'vue';
 import painationElement from './painationElement.vue';
-import place_holder_plan from '../place_holder_plan.vue';
 const props = defineProps({
     url: {
         type: String,

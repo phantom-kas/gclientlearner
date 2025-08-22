@@ -24,7 +24,7 @@ onBeforeMount(()=>{
   stars.value = props.num_stars
 })
 
-const handelHov = (e) => {
+const handelHov = (e:any) => {
     let allstars = document.querySelectorAll('.starc')
  // let starse = document.querySelectorAll('.starc')
   for (let index = 0; index < 5; index++) {
@@ -42,7 +42,7 @@ const handelHov = (e) => {
 
 const starc = ref([] as HTMLElement[])
 
-const handelHovLeave = (e) => {
+const handelHovLeave = (e:any) => {
   let allstars = document.querySelectorAll('.starc')
   // let starse = document.querySelectorAll('.starc')
   for (let index = 0; index < 5; index++) {
