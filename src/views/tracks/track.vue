@@ -131,25 +131,25 @@ const dispalyRatingData = ref(null as number | null)
                 <div class="coursebds">
                     <div class="border-t-neutral-200 darkmode:border-t-neutral-800 border-t-1 mt-4">
                         <span>
-                            <FontAwesomeIcon :icon="['fas', 'trash-can']" />Duration
+                            <FontAwesomeIcon :icon="['far', 'clock-four']" />Duration
                         </span>
                         {{ track.duration }}
                     </div>
                     <div>
                         <span>
-                            <FontAwesomeIcon :icon="['fas', 'trash-can']" />Courses
+                            <FontAwesomeIcon :icon="['fas', 'graduation-cap']" />Courses
                         </span>
                         {{ track.num_courses }}
                     </div>
                     <div>
                         <span>
-                            <FontAwesomeIcon :icon="['fas', 'trash-can']" />Instructor
+                            <FontAwesomeIcon :icon="['far', 'user']" />Instructor
                         </span>
                         {{ track.Instructor }}
                     </div>
                     <div>
                         <span>
-                            <FontAwesomeIcon :icon="['fas', 'trash-can']" />Date
+                            <FontAwesomeIcon :icon="['far', 'calendar']" />Date
                         </span>
                         {{ track.created_at && track.created_at.split(' ')[0] }}
                     </div>
@@ -243,7 +243,7 @@ const dispalyRatingData = ref(null as number | null)
 @reference "../../assets/css/main.css";
 
 .coursebds>div {
-    @apply border-b-neutral-200 darkmode:border-b-neutral-800 ! border-b-1 py-4 pr-6 flex justify-between items-center text-sm
+    @apply border-b-neutral-200 darkmode:border-b-neutral-800! border-b-1 py-4 pr-6 flex justify-between items-center text-sm
 }
 
 .bsdd {

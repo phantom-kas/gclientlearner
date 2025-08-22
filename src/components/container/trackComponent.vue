@@ -5,7 +5,7 @@ import dropdown from '../menus/dropdown.vue';
 // import { ref } from 'vue';
 import { onBeforeMount, ref, type PropType } from 'vue';
 import { useRouter } from 'vue-router';
-
+import rating from '../rating.vue';
 const props = defineProps({
     track: {
         type: Object as PropType<{
@@ -16,7 +16,9 @@ const props = defineProps({
             price: string | number,
             num_courses?: number,
             id: string | number,
-            Instructor: string
+            Instructor: string,
+            total_ratings: number,
+            num_rating: number
         }>,
         default: {
             title: 'Data Science',
@@ -53,12 +55,16 @@ const emit = defineEmits(['edit', 'delete', 'editImage'])
 const cc = () => {
     window.alert('12')
 }
+
+const displayrating:number = Number((props.track.total_ratings / props.track.num_rating).toFixed(2))
 </script><template>
     <!-- {{ props.track.courses }} -->
-    <router-link :to="{name:'track',params:{id:track.id}}" class="flex flex-col items-start justify-center  rounded-t-2xl theme1cont relative">
+    <!-- {{ track }} -->
+    <router-link :to="{ name: 'track', params: { id: track.id } }"
+        class="flex flex-col items-start justify-center  rounded-t-2xl theme1cont relative">
         <img :src="track.url" alt="" class="rounded-t-2xl">
-        <span class=" absolute right-4 text-sm  theme1cont top-4 px-2.5 rounded-2xl py-1">{{ anyCurrency(track.price)
-        }}</span>
+
+
         <div class="p-5 flex flex-col gap-y-3 w-full">
             <h2 class=" text-[18px] font-[600]">{{ track.title }}</h2>
             <span class=""> <font-awesome-icon :icon="['far', 'calendar']" />
@@ -72,6 +78,15 @@ const cc = () => {
                 </span>
                 {{ track.num_courses ? track.num_courses > 2 ? '+' + (track.num_courses - 2) + ' more' : '' : '' }}
             </div>
+
+            <div class="flex justify-end gap-4">
+                <rating :rating="track.total_ratings / track.num_rating" />
+                <span v-if="!isNaN(displayrating)">{{ displayrating  }} / 5.0  <span class=" opacity-45 text-xs">({{track.num_rating}})</span> </span>
+            </div>
+            <span class=" absolute right-4 text-sm  theme1cont top-4 px-2.5 rounded-2xl py-1">{{
+                anyCurrency(track.price)
+            }}</span>
+
 
             <!-- <slot name="action">
                 <div @click.stop.prevent v-if="showDropDown" class="w-full flex justify-end text-[14px]">

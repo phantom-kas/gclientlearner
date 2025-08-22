@@ -14,16 +14,23 @@ import { useauthStore } from '@/stores/auth';
 import { getImageUrl } from '@/composabels/utilities';
 import IconSun from './icons/IconSun.vue';
 import IconMoon from './icons/IconMoon.vue';
+import { onBeforeRouteUpdate } from 'vue-router';
 
 const theme = useThemeStore()
 const darkModelOpen = ref(false)
-const isOpen = ref(true)
+const isOpen = ref(false)
 const handelToggle = () => {
     isOpen.value = !isOpen.value
 }
 
 const user = useUserStore()
 const auth = useauthStore()
+
+onBeforeRouteUpdate(() => {
+    isOpen.value = false
+})
+
+
 </script>
 <template>
     <header
@@ -49,7 +56,7 @@ const auth = useauthStore()
                     @click="darkModelOpen = !darkModelOpen">
                     <template #menubutton>
                         <!-- <FontAwesomeIcon v-if="theme.value == 'light'" size="xl" :icon="['far', 'sun']" /> -->
-                        <div class=" pointer-events-none"> 
+                        <div class=" pointer-events-none">
                             <IconSun v-if="theme.value == 'light'" />
                             <IconMoon v-else-if="theme.value == 'dark'" />
                             <!-- <FontAwesomeIcon v-else-if="theme.value == 'dark'" size="xl" :icon="['fas', 'moon']" /> -->
@@ -79,7 +86,7 @@ const auth = useauthStore()
                 </template>
                 <Dropdown @logout="auth.logout()" v-else class="rounded-3xl!" :options="[
                     { label: 'Portal', icon: ['fas', 'graduation-cap'], isLink: true, to: { name: 'dashboard' }, emit: 'nein' },
-                    { label: 'settings', icon: ['fas', 'gear'], isLink: true, to: { name: 'settings' }, emit: 'nein' },
+                    { label: 'Settings', icon: ['fas', 'gear'], isLink: true, to: { name: 'settings' }, emit: 'nein' },
                     { label: 'Logout', icon: ['fas', 'arrow-right-from-bracket'], isLink: false, to: { name: 'dashboard' }, emit: 'logout' }
                 ]">
                     <template #btn>

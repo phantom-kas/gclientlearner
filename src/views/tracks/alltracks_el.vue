@@ -55,7 +55,7 @@ let listParams = { search: undefined as undefined | string }
             <template #items="{ item, i }">
                 <trackComponent  :showDropDown :showInstructor @editImage="(track: any) => {emit('editImage', { ...track,i })}"
                     @edit="track => emit('delete', { ...track,i })" @delete="track => emit('edit', { ...track,i })"
-                    :track="{Instructor:item.Instructor, id: item.id, price: item.price, title: item.name, url: getImageUrl(item.image), duration: item.duration, courses: item.courses, num_courses: item.num_courses }"
+                    :track="{Instructor:item.Instructor, id: item.id, price: item.price, title: item.name, url: getImageUrl(item.image), duration: item.duration, courses: item.courses, num_courses: item.num_courses,...item }"
                     class=" " />
                     <!-- {{ item.price }} -->
                 <!-- {{ i }}
