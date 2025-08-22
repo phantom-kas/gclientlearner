@@ -44,7 +44,7 @@ onMounted(async () => {
             <h1 class=" font-[600] text-3xl text-start w-full mb-4">Enrolled Tracks</h1>
             <div class=" w-full  gap-4 grid grid-cols-[repeat(auto-fit,minmax(100px,auto))] ">
                 <button @click="getTrack(t.id)" :class="{ ' ring-6 not-darkmode:ring-black': track?.id == t.id }"
-                    class="p-3  text-white bg-blue rounded-sm cursor-pointer font-[400] n  darkmode:hover:bg-blue-950 not-darkmode:hover:bg-blue-500"
+                    class="p-3  text-white not-darkmode:bg-blue darkmode:bg-gray-950 rounded-sm cursor-pointer font-[400] n  darkmode:hover:bg-blue-950 not-darkmode:hover:bg-blue-500"
                     v-for="t in tracks">
                     {{ t.name }}
                 </button>

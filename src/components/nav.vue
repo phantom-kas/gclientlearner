@@ -84,6 +84,7 @@ onBeforeRouteUpdate(() => {
                         </buttonWhite>
                     </router-link>
                 </template>
+                
                 <Dropdown @logout="auth.logout()" v-else class="rounded-3xl!" :options="[
                     { label: 'Portal', icon: ['fas', 'graduation-cap'], isLink: true, to: { name: 'dashboard' }, emit: 'nein' },
                     { label: 'Settings', icon: ['fas', 'gear'], isLink: true, to: { name: 'settings' }, emit: 'nein' },
