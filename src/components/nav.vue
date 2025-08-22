@@ -35,7 +35,7 @@ onBeforeRouteUpdate(() => {
 <template>
     <header
         class="sm:w-full flex justify-center px-4 theme1cont  w-sidebar300 z-[99999]  fixed  inset-0  sm:h-15 border-y-0! border-l-0! shadow-md"
-        :class="{ 'h-screen ': isOpen, 'h-15 border-none': !isOpen }">
+        :class="{ 'h-dvh ': isOpen, 'h-15 border-none': !isOpen }">
         <div class="flex flex-col sm:flex-row justify-start items-start sm:items-center sm:w-max1200 w-full ">
             <div class=" flex justify-start gap-x-0 items-center h-15 sm:h-[unset]">
                 <button @click="handelToggle"

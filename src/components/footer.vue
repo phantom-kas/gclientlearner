@@ -1,4 +1,5 @@
 <script setup lang='ts'>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import IconCi from './icons/IconCi.vue';
 </script>
 <template>
@@ -11,26 +12,31 @@ import IconCi from './icons/IconCi.vue';
                 <div class=" flex flex-col items-start justify-start gap-2">
                     <router-link class="font-[700] text-lg" to="">Menu</router-link>
                     <router-link to="/">Home</router-link>
-                    <router-link to="/">Home</router-link>
+                    <router-link :to="{name:'tracks'}">Tracks</router-link>
                 </div>
 
                 <div class=" flex flex-col items-start justify-start gap-2">
-                    <router-link class="font-[700] text-lg" to=''>Menu</router-link>
-                    <router-link to="/">Home</router-link>
-                    <router-link to="/">Home</router-link>
+                    <router-link class="font-[700] text-lg" to=''>Contact</router-link>
+                    <router-link to="/">+23341002000</router-link>
+                    <router-link to="/">New  Reiss ,Ghana, Accra </router-link>
                 </div>
 
 
                 <div class=" flex flex-col items-start justify-start gap-2">
-                    <router-link class="font-[700] text-lg" to=''>Menu</router-link>
-                    <router-link to="/">Home</router-link>
-                    <router-link to="/">Home</router-link>
+                    <router-link class="font-[700] text-lg" to=''>Social</router-link>
+                    <router-link to="/">LinkedIn</router-link>
+                    <router-link to="/">Facebook</router-link>
                 </div>
             </div>
         </div>
         <div class=" flex flex-row justify-between items-center gap-x-4 mt-10 py-5 border-t-2 border-white w-max1200">
             <span>@ copyright 2025 - G-client, All rights reserved</span>
-            <span>Back to top</span>
+            <span>Back to top
+<span class=" p-1 border-white border-1 ">
+
+    <FontAwesomeIcon  :icon="['fas','arrow-up']"/>
+</span>
+            </span>
         </div>
     </section>
 </template>
