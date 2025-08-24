@@ -23,7 +23,7 @@ onMounted(() => {
 })
 </script>
 <template>
-    <div class=" w-screen h-screen bg-blue flex flex-col items-center justify-center fixed top-0 left-0 z-50 darkmode">
+    <div class=" w-screen h-dvh bg-blue flex flex-col items-center justify-center fixed top-0 left-0 z-50 darkmode">
         <!-- <h1>sadasd</h1> -->
         <IconCi :size="100" />
         <SpinLinePules />

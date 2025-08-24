@@ -32,6 +32,7 @@ declare module 'axios' {
 
 axios.interceptors.request.use((req) => {
   const user = useUserStore();
+  req.withCredentials = true
   if (user.getAToken != undefined && user.getAToken != "") {
     req.headers.Authorization = "Bearer " + user.getAToken;
   } else {

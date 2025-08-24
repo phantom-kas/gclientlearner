@@ -111,7 +111,7 @@ const unmount = () => {
 </script>
 <template>
     <div @close="unmount(), emit('close')"
-        class="absolute l-9 flex flex-col left-0 top-0 z-[910] w-screen h-screen  items-center overflow-scroll py-6 mt-13">
+        class="absolute l-9 flex flex-col left-0 top-0 z-[910] w-screen h-dvh  items-center overflow-scroll py-6 mt-13">
         <overlayfixed @click="emit('close')" class=" z-50" />
 
         <div id='' class="w-max1000 flex flex-col payc justify-start items-center relative z-50">
