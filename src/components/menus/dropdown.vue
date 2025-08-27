@@ -99,7 +99,7 @@ onMounted(() => {
 <template>
     <div ref="trigger" class="relative inline-block" @click="toggleDropdown">
 
-        <button class="px-2 py-1  rounded-sm dark:hover:bg-neutral-800 hover:bg-gray-200 cursor-pointer">
+        <button class="px-2 py-1  rounded-sm darkmode:hover:bg-neutral-800 hover:bg-gray-200 cursor-pointer">
             <slot name="btn">
                 <FontAwesomeIcon size="lg" :icon="['fas', 'ellipsis']" />
             </slot>
@@ -109,12 +109,12 @@ onMounted(() => {
 
         <transition name="fade">
             <div v-show="isOpen" ref="dropdown" :class="dropdownPositionClass"
-                class="absolute z-50 mt-2 w-40 text-xs  shadow-lg dark:border-bg-white3   rounded dark:bg-neutral-950 bg-white1 cursor-pointer drop-cont">
+                class="absolute z-50 mt-2 w-40 text-xs  shadow-lg darkmode:border-bg-white3   rounded darkmode:bg-neutral-950 bg-white1 cursor-pointer drop-cont">
                 <ul class=" w-full flex flex-col  items-center py-1 gap-y-0">
                     <template v-for="op, i in options" :key="i">
                         
                         <component :to="op.to" :is="op.isLink ? RouterLink : 'button'" v-if="!op.hide" @click="$emit(op.emit)"
-                            class="py-2 px-2 rounded-sm hover:bg-gray-200 dark:hover:bg-neutral-800 cursor-pointer w-[90%] gap-x-2 flex items-center">
+                            class="py-2 px-2 rounded-sm hover:bg-gray-200 darkmode:hover:bg-neutral-800 cursor-pointer w-[90%] gap-x-2 flex items-center">
                             <FontAwesomeIcon size="lg" :icon="op.icon" />
                             <span class="text-xs" v-html="op.label"></span>
                            

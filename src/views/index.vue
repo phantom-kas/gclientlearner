@@ -30,9 +30,9 @@ const loader = useLoaderStore()
 <template>
   <template v-if="hasLoaded">
     <Nav></Nav>
-    <div class="w-full h-18 not-darkmode:bg-white darkmode:bg-black shadow-md sticky top-0 z-[1000]"></div>
+    <div class="w-full h-15 not-darkmode:bg-white darkmode:bg-black  sticky top-0 z-[1000]"></div>
     <main
-      class=" w-full z-1 relative   ofov  sm:flex flex-col items-center justify-start overflow-hidden  darkmode:bg-black bg-white darkmode:text-neutral-300 text-black">
+      class=" w-full z-1 relative    ofov  sm:flex flex-col items-center justify-start overflow-hidden  darkmode:bg-black bg-white darkmode:text-neutral-300 text-black">
       <router-view></router-view>
 
       <Footer>

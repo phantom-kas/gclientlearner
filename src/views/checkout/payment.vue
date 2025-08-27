@@ -57,12 +57,12 @@ const showStripe = ref(false)
         </h1>
 
         <div 
-            class=" flex flex-row gap-y-4 gap-x-4  w-max1000 items-start justify-between  flex-wrap">
-            <div @click="showStripe = true"  v-if="amount " class=" flex justify-center items-center p-10 rounded-2xl theme1cont shadow-md grow w-max100">
+            class=" grid gap-y-4 gap-x-4  w-max1000 flex-wrap sm:grid-cols-2 grid-cols-1">
+            <div @click="showStripe = true"  v-if="amount " class="  text-center flex justify-center items-center p-10 rounded-2xl theme1cont shadow-md grow hover:ring-blue hover:ring-2 cursor-pointer">
                 PAY {{ anyCurrency(amount as number) }}
             </div>
             <div v-if="amount && rate" @click="handelInitPs"
-                class=" flex justify-center items-center p-10 rounded-2xl theme1cont shadow-md grow w-max100">
+                class=" flex justify-center items-center p-10 rounded-2xl text-center  theme1cont shadow-md grow hover:ring-blue hover:ring-2 cursor-pointer">
                 PAY {{ anyCurrency(amount + '', rate as number, 'GHS') }}
             </div>
         </div>

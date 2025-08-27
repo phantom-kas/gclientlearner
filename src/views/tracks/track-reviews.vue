@@ -33,7 +33,7 @@ onBeforeMount(() => {
                 <div v-for="i in 5" class=" w-full flex gap-2 items-end">
                     
                     <span class=" text-sm"> {{ i  }}</span>
-                    <div class=" w-full relative flex  shadow-sm bg-neutral-200 dark:bg-neutral-600 rounded-sm h-4">
+                    <div class=" w-full relative flex  shadow-sm bg-neutral-200 darkmode:bg-neutral-600 rounded-sm h-4">
                         <span
                             :style="{ width: ((parseInt(ratingDetailes[i] + '') / parseInt(track.num_rating) * 100) + '') + '%' }"
                             class="w-[0] py-0.5 h-full bg-amber-400 rounded-sm"></span>
@@ -49,7 +49,7 @@ onBeforeMount(() => {
             <template #items="{ item, i }">
                 <!-- {{ item }} -->
                 <div
-                    class="theme1cont dark:text-white1 text-black flex flex-col items-start justify-start theme1cont shadow-sm my-2 p-4 w-full">
+                    class="theme1cont darkmode:text-white1 text-black flex flex-col items-start justify-start theme1cont shadow-sm my-2 p-4 w-full">
                     <div class="flex gap-2">
                         <avatarImage :url="getImageUrl(item.image)" />
                         <span>{{ item.firstName }} {{ item.lastName }}</span>
