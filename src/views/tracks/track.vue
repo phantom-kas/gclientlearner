@@ -244,7 +244,7 @@ const dispalyRatingData = ref(null as number | null)
 @reference "../../assets/css/main.css";
 
 .coursebds>div {
-    @apply border-b-neutral-200 darkmode:border-b-neutral-800 ! border-b-1 py-4 pr-6 flex justify-between items-center text-sm
+    @apply border-b-neutral-200 darkmode:border-b-neutral-800! border-b-1 py-4 pr-6 flex justify-between items-center text-sm
 }
 
 .bsdd {
