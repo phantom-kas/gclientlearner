@@ -3,7 +3,7 @@ import input2 from '@/components/form_components/input2.vue';
 import blueButton from '@/components/buttons/blueButton.vue';
 import buttonWhite from '@/components/buttons/buttonWhite.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import select2 from '@/components/form_components/select2.vue';
 import quill_input from '@/components/form_components/quill_input.vue';
 import { useUserStore } from '@/stores/user';
@@ -12,6 +12,7 @@ import axios from 'axios';
 import screen2 from '@/components/container/screen2.vue';
 import image_picker from '@/components/form_components/image_picker.vue';
 import { getImageUrl } from '@/composabels/utilities';
+import SpinBig from '@/components/spinners/spinBig.vue';
 const data = ref({} as { [key: string]: string })
 
 const user = useUserStore()
@@ -72,20 +73,23 @@ const handelUpdate = () => {
             resetForm()
             return
         }
-        user.userInfo.email = data.value.email
-        user.userInfo.firstName = data.value.firstName
-        user.userInfo.lastName = data.value.lastName
-        user.userInfo.description = data.value.description
-        user.userInfo.description = data.value.description
-        user.userInfo.location = data.value.location
-        user.userInfo.disability = data.value.disability
-        user.userInfo.gender = data.value.gender
+        setData()
         // data.value = {}
     })
 }
 
-
-const passwordData = ref({oldPassword:'',newPassword:''} as { [key: string]: string })
+const setData = () => {
+    user.userInfo.email = data.value.email
+    user.userInfo.firstName = data.value.firstName
+    user.userInfo.lastName = data.value.lastName
+    user.userInfo.description = data.value.description
+    user.userInfo.description = data.value.description
+    user.userInfo.location = data.value.location
+    user.userInfo.disability = data.value.disability
+    user.userInfo.gender = data.value.gender
+    user.userInfo.phone = data.value.phone
+}
+const passwordData = ref({ oldPassword: '', newPassword: '' } as { [key: string]: string })
 
 const handelPasswordUpdate = () => {
     // axios.request({ url:, method: 'PUT',, })
@@ -97,26 +101,36 @@ const handelPasswordUpdate = () => {
 }
 const imageLoading = ref(true);
 
+const loaded = ref(false)
+onMounted(() => {
+    axios.get('user/' + user.userInfo.id).then(res => {
+        if (res.data.status != 'success') return
+        data.value = res.data.data[0]
+        setData()
+        loaded.value = true
+        // user.userInfo = res.data.data
+    })
+})
 </script>
 <template>
-    <section class=" flex flex-col items-center justify-end w-full  sm:pt-15 ">
-        <div
-            class=" flex  sm:flex-row flex-col justify-between sm:justify-start items-center sm:items-start w-max1200 plr py-30 gap-10">
+    <!-- {{ data }} -->
+    <section class=" flex flex-col items-center justify-end w-full  sm:pt-4 ">
+        <div v-if="loaded"
+            class=" flex  sm:flex-row flex-col justify-between sm:justify-start items-center sm:items-start w-max1200 plr py-10 gap-10">
             <div class=" flex flex-col items-center justify-start w-max300 sm:sticky top-0">
                 <div class="w-[300px] h-[300px] relative">
                     <!-- {{ imageLoading ?'loading image':'Done' }}
                     {{ imageError }} -->
-                    <img  @load="imageLoading = false" v-if="!imageError" @error="()=> imageError = true" :src="getImageUrl(user.userInfo.image)" alt=""
-                        class=" w-full h-full rounded-[50%]" />
+                    <img @load="imageLoading = false" v-if="!imageError" @error="() => imageError = true"
+                        :src="getImageUrl(user.userInfo.image)" alt="" class=" w-full h-full rounded-[50%]" />
                     <div v-else
                         class=" w-full h-full flex justify-center items-center rounded-[50%] border border-gray-500">
                         <FontAwesomeIcon size="9x" :icon="['far', 'user']" />
                     </div>
                     <!-- <img :src="getImageUrl(user.userInfo.image)" alt=""
                         class=" w-full h-full rounded-[50%]" /> -->
-                        <!-- dsadasdasdas -->
+                    <!-- dsadasdasdas -->
                     <button @click="router.push({ name: 'change_image' })"
-
                         class=" absolute w-13 h-13 rounded-4xl right-0 bottom-0 flex flex-col justify-center items-center text-white3 theme1cont cursor-pointer">
                         <FontAwesomeIcon size="2x" :icon="['fas', 'pencil']" />
                     </button>
@@ -183,7 +197,7 @@ const imageLoading = ref(true);
                         <!-- {{ passwordData }} -->
                     </h1>
                     <div class=" w-full flex flex-row gap-4 justify-between flex-wrap">
-                        <input2 :data="passwordData"  class=" w-max200 grow" name="oldPassword" :icon="['fas', 'lock']"
+                        <input2 :data="passwordData" class=" w-max200 grow" name="oldPassword" :icon="['fas', 'lock']"
                             label="Old Password" type="password" />
                         <input2 key="sadas" :data="passwordData" class=" w-max200 grow" name="newPassword"
                             :icon="['fas', 'lock']" label="New Password" type="password" />
@@ -200,6 +214,10 @@ const imageLoading = ref(true);
 
 
         </div>
+
+      
+
+        <SpinBig  v-else />
 
         <screen2 @close="router.go(-1)" v-if="route.name == 'change_image'" to="#modal2" defer>
 

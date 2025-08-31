@@ -9,9 +9,12 @@ import { isDev } from "@/composabels/utilities";
 //;
 
 if (isDev()) {
+  // axios.defaults.baseURL = "http://localhost:5000/api/";
+  // axios.defaults.baseURL = "https://gc-rest-api.onrender.com/api/";
   axios.defaults.baseURL = "http://localhost:5000/api/";
+
 } else {
-axios.defaults.baseURL = "https://gc-rest-api.onrender.com/api/";
+  axios.defaults.baseURL = "https://gc-rest-api.onrender.com/api/";
 }
 const axiosApiInstance = axios.create();
 
@@ -134,12 +137,12 @@ axios.interceptors.response.use(
       c = c + 1;
       refresh = true;
       let url = "";
-     
+
       url = "generate_new_access_token";
       return axios({
         url,
         method: "POST",
-       withCredentials: true,
+        withCredentials: true,
       })
         .finally(() => {
         })
@@ -174,7 +177,7 @@ axios.interceptors.response.use(
       const router1 = router;
       router1.push({ name: "login" });
       return;
-    } 
+    }
     // else if (error.response.status == 403) {
     //   const router1 = router;
     //   router1.push({ name: "dashboard" });

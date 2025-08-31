@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { computed, onMounted, ref, type PropType } from 'vue';
 import painationElement from './painationElement.vue';
+import SpinBig from '../spinners/spinBig.vue';
 const props = defineProps({
     url: {
         type: String,
@@ -30,7 +31,7 @@ const props = defineProps({
 const listItems = ref<any[]>([])
 const emit = defineEmits(['fullList', 'paginationList'])
 const lastId = ref<string | undefined>(undefined)
-const loading =  ref(false)
+const loading = ref(false)
 let loadedPages = [] as any[]
 const fetchContent = async (order = 1) => {
     if (loading.value) {
@@ -89,8 +90,8 @@ onMounted(async () => {
 </script>
 <template>
     <!-- {{ data }} -->
-    <painationElement :disabled="loading" @prev="fetchContent(-1)" @changePage="fetchContent()" v-if="showPaginationControls" :data
-        :itemsPerPage />
+    <painationElement :disabled="loading" @prev="fetchContent(-1)" @changePage="fetchContent()"
+        v-if="showPaginationControls" :data :itemsPerPage />
     <component v-bind="$attrs" :is="component" class="w-full @container overflow-x-clip">
         <slot name="table_header">
         </slot>
@@ -100,8 +101,17 @@ onMounted(async () => {
                     {{ item }}
                 </slot>
             </template>
+            <!-- <td class=" d"> -->
+          
+            <tr v-if="loading" class="w-full col-span-full">
+                <td colspan="100%" class="w-full mx-auto" :class="{'block':component !='table' }" style="text-align: center;">
+                    <SpinBig class="mx-auto" />
+                </td>
+            </tr>
+            <!-- </td> -->
         </transition-group>
     </component>
-    <painationElement  :disabled="loading" @changePage="fetchContent()" v-if="showPaginationControls" :data :itemsPerPage />
+    <painationElement :disabled="loading" @changePage="fetchContent()" v-if="showPaginationControls" :data
+        :itemsPerPage />
 </template>
 <style scoped></style>

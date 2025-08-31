@@ -3,23 +3,30 @@
 <template>
   <span class="loader2" ></span>
 </template>
-<style scoped>
+<style>
 .loader2 {
   position: relative;
   width: 85px;
   display: block;
   height: 50px;
   background-repeat: no-repeat;
-  background-image: linear-gradient(#FFF 50px, transparent 0),
+  background-image: linear-gradient(#c2c1c1 50px, transparent 0),
+    linear-gradient(#c2c1c1 50px, transparent 0),
+    linear-gradient(#c2c1c1 50px, transparent 0),
+    linear-gradient(#c2c1c1 50px, transparent 0),
+    linear-gradient(#c2c1c1 50px, transparent 0),
+    linear-gradient(#c2c1c1 50px, transparent 0);
+  background-position: 0px center, 15px center, 30px center, 45px center, 60px center, 75px center, 90px center;
+  animation: rikSpikeRoll 0.65s linear infinite alternate;
+}
+.darkmode .loader2{
+   background-image: linear-gradient(#FFF 50px, transparent 0),
     linear-gradient(#FFF 50px, transparent 0),
     linear-gradient(#FFF 50px, transparent 0),
     linear-gradient(#FFF 50px, transparent 0),
     linear-gradient(#FFF 50px, transparent 0),
     linear-gradient(#FFF 50px, transparent 0);
-  background-position: 0px center, 15px center, 30px center, 45px center, 60px center, 75px center, 90px center;
-  animation: rikSpikeRoll 0.65s linear infinite alternate;
 }
-
 
 @keyframes rikSpikeRoll {
   0% {

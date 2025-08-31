@@ -153,7 +153,7 @@ axios.interceptors.response.use(
             user.SetTokens(null, '')
             return
           }
-          user.SetTokens(res.data.data.refreshToken, res.data.data.accessToken);
+          user.SetTokens(null, res.data.data.accessToken);
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + res.data.data.accessToken;
           originalRequest.headers.Authorization =
