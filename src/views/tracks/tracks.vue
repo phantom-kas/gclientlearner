@@ -1,6 +1,11 @@
 <script setup lang='ts'>
 import tracks3 from '@/components/tracks/tracks3.vue';
 import search_input from '@/components/form_components/search_input.vue';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+    window.scrollTo(0, 0);
+})
 </script>
 <template>
     <div class=" flex flex-col justify-center items-center p-13 bg-blue w-full text-3xl font-[700] text-white">

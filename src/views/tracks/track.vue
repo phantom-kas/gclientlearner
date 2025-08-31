@@ -25,6 +25,7 @@ const loading = ref(true)
 const track = ref({} as { [key: string]: string | number })
 const courses = ref([] as { [key: string]: string }[])
 onMounted(() => {
+    window.scrollTo(0, 0);
     let url = urlAuthUnAuth('/track-courses/' + props.id, 'learner/track/' + props.id)
     axios.get(url).finally(() => {
     }).then(res => {
@@ -45,7 +46,7 @@ const showRatingEdit = ref(false)
 const updateDisplayRating = (rate: number) => {
     track.value.num_rating = (parseInt(track.value.num_rating + '') + 1)
     track.value.total_ratings = parseInt(track.value.total_ratings + '') + rate
-    ratingDetailes.value[rate] = parseInt(ratingDetailes.value[rate]+'') + 1
+    ratingDetailes.value[rate] = parseInt(ratingDetailes.value[rate] + '') + 1
     dispalyRatingData.value = track.value.total_ratings / track.value.num_rating
 }
 
@@ -89,7 +90,7 @@ const dispalyRatingData = ref(null as number | null)
             <div
                 class=" flex flex-col items-start justify-start gap-5  text-white  relative shadow-[-2px_-400vw_0px_400vw] bg-blue shadow-blue  h-fit pb-15 darkmode:shadow-neutral-800 darkmode:bg-neutral-800">
                 <div class=" flex gap-4 z-10 relative   w-max1200 text-white2 font-[400] ">
-                    <span>Home</span><span>></span><span>Tracks</span> <span>></span> <span
+                    <router-link class=" hover:underline" to="/">Home</router-link> > <router-link class=" hover:underline" to="/tracks">Tracks</router-link> ><span
                         class="text-white font-[600] opacity-100">{{ track.name }}</span>
                 </div>
                 <h1 class=" font-[700] text-lg sm:text-4xl">{{ track.name }}</h1>
@@ -243,7 +244,7 @@ const dispalyRatingData = ref(null as number | null)
 @reference "../../assets/css/main.css";
 
 .coursebds>div {
-    @apply border-b-neutral-200 darkmode:border-b-neutral-800! border-b-1 py-4 pr-6 flex justify-between items-center text-sm
+    @apply border-b-neutral-200 darkmode:border-b-neutral-800 ! border-b-1 py-4 pr-6 flex justify-between items-center text-sm
 }
 
 .bsdd {

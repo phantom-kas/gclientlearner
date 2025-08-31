@@ -6,7 +6,7 @@ import search_input from '@/components/form_components/search_input.vue';
 import { useRoute, useRouter } from 'vue-router';
 // import createTrack from './createTrack.vue';
 // import screen2 from '@/components/container/screen2.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 // import confrimComponent from '@/components/confrimComponent.vue';
 import axios from 'axios';
 // import image_picker from '@/components/form_components/image_picker.vue';
@@ -83,6 +83,11 @@ const searchFn = debounce((e: string) => {
     listParams = { search: e[0] }
     listKey.value += 1
 }, 500);
+
+
+onMounted(() => {
+    window.scrollTo(0, 0);
+})
 </script>
 <template>
     <section class="plr flex flex-col items-center justify-start w-full py-25">
